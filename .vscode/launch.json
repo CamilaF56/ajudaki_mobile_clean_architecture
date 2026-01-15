@@ -1,0 +1,29 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ajudaki_mobile_clean_architecture",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "ajudaki_mobile_clean_architecture (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "ajudaki_mobile_clean_architecture (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "ajudaki_mobile_clean_architecture (Chrome debug)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome",
+            "flutterMode": "debug"
+        }
+    ]
+}
