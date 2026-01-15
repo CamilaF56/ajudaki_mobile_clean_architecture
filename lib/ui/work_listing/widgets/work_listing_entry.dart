@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../models/work_listing.dart';
+import '../../../domain/work_listing.dart';
 
 /// Widget responsável por exibir um anúncio de trabalho.
 ///

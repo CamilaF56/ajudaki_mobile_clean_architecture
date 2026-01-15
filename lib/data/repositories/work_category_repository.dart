@@ -1,4 +1,4 @@
-import '../../models/work_category.dart';
+import '../../domain/work_category.dart';
 import '../../utils/response.dart';
 import '../services/api/api_client.dart';
 

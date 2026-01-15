@@ -1,7 +1,7 @@
-import '../../../models/professional.dart';
-import '../../../models/work_category.dart';
-import '../../../models/work_listing.dart';
-import '../../../models/work_type.dart';
+import '../../../domain/professional.dart';
+import '../../../domain/work_category.dart';
+import '../../../domain/work_listing.dart';
+import '../../../domain/work_type.dart';
 import '../../../utils/response.dart';
 import 'http_get_helper.dart';
 

@@ -1,5 +1,5 @@
-import 'package:ajudaki_mobile_clean_architecture/models/work_category.dart';
-import 'package:ajudaki_mobile_clean_architecture/models/work_listing.dart';
+import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
+import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/view_models/work_listing_view_model.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_entry.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_screen.dart';
