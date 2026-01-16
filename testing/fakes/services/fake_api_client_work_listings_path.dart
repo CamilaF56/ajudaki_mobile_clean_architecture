@@ -32,7 +32,7 @@ class FakeApiClientWorkListingsPath extends ApiClientWorkListingsPath {
       fromJson: (json) => json.map(
       (key, value) => MapEntry(
         key,
-        fromJson(value as Map<String, dynamic>),
+        fromJson(value as Map<String, WorkListing>),
       )
     ));
   }
