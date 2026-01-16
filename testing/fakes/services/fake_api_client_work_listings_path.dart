@@ -26,6 +26,14 @@ class FakeApiClientWorkListingsPath extends ApiClientWorkListingsPath {
     }
     ''';
 
-    return WebResponse(200, bodyString: jsonString, );
+    return WebResponse(
+      200,
+      bodyString: jsonString,
+      fromJson: (json) => json.map(
+      (key, value) => MapEntry(
+        key,
+        fromJson(value as Map<String, dynamic>),
+      )
+    ));
   }
 }

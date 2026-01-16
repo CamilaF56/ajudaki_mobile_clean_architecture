@@ -24,23 +24,12 @@ class ApiClientPath<T> {
   }) async {
     return await ApiClientOperations.get<Map<String, T>>(
       resource,
-      (json) => deserializeManyItems<T>(
-            json as Map<String, dynamic>,
-            fromJson,
-          ),
-      queryParameters: queryParameters,
-    );
-  }
-
-  Map<String, T> deserializeManyItems<T>(
-    Map<String, dynamic> json,
-    T Function(Map<String, dynamic>) fromJson,
-  ) {
-    return json.map(
+      (json) => json.map(
       (key, value) => MapEntry(
         key,
         fromJson(value as Map<String, dynamic>),
-      ),
+      )),
+      queryParameters: queryParameters,
     );
   }
 }
