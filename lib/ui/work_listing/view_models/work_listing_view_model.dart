@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:logging/logging.dart';
 import '../../../data/repositories/work_category_repository.dart';
 import '../../../data/repositories/work_listing_repository.dart';
 import '../../../domain/work_category.dart';
@@ -16,9 +15,6 @@ class WorkListingViewModel extends ChangeNotifier {
     required final WorkCategoryRepository workCategoryRepository,
   }) : _workListingRepository = workListingRepository,
        _workCategoryRepository = workCategoryRepository;
-
-  /// Logger utilizado para registrar avisos e erros.
-  final _log = Logger('WorkListingViewModel');
 
   /// Repositório de anúncios de trabalho.
   final WorkListingRepository _workListingRepository;
@@ -114,7 +110,6 @@ class WorkListingViewModel extends ChangeNotifier {
       _categories = response.value;
     } else {
       _hasCategoryError = true;
-      _log.warning('Falha ao carregar áreas de atuação');
     }
 
     _isLoading = false;
@@ -134,7 +129,6 @@ class WorkListingViewModel extends ChangeNotifier {
     } else {
       _listings = [];
       _hasListingError = true;
-      _log.warning('Falha ao carregar serviços');
     }
 
     _isLoading = false;
@@ -169,7 +163,6 @@ class WorkListingViewModel extends ChangeNotifier {
     } else {
       _listings = [];
       _hasListingError = true;
-      _log.warning('Busca falhou: "$trimmed"');
     }
 
     _isLoading = false;
@@ -198,7 +191,6 @@ class WorkListingViewModel extends ChangeNotifier {
     } else {
       _listings = [];
       _hasListingError = true;
-      _log.warning('Filtro falhou. CategoryId=${category.id}');
     }
 
     _isLoading = false;
@@ -226,7 +218,6 @@ class WorkListingViewModel extends ChangeNotifier {
     } else {
       _listings = [];
       _hasListingError = true;
-      _log.warning('Falha ao restaurar dados');
     }
 
     _isLoading = false;
