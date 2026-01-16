@@ -14,11 +14,15 @@ class ApiClientPath<T> {
   }) async {
     return await ApiClientOperations.get<Map<String, T>>(
       resource,
-      (json) => json.map(
-      (key, value) => MapEntry(
-        key,
-        fromJson(value as Map<String, dynamic>),
-      )),
+      (json) {
+      final map = json as Map<String, dynamic>;
+      return map.map<String, T>(
+        (key, value) => MapEntry(
+          key,
+          fromJson(value as Map<String, dynamic>),
+        ),
+      );
+    },
       queryParameters: queryParameters,
     );
   }
