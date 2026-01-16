@@ -3,9 +3,8 @@ class FakeApiClientPath<T> {
     Map<String, T> map
   );
 
-  Map<String, T> getAll({
-    required Map<String, T> map
-  }) {
+  Map<String, T> getAll(
+    Map<String, T> map) {
     return map;
   }
 }
