@@ -1,28 +1,29 @@
 import 'dart:convert';
+import 'package:ajudaki_mobile_clean_architecture/utils/response.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/web/web_response_status_type.dart';
 
 /// Classe base selada que representa uma resposta de uma API web.
 ///
 /// Contém o código HTTP bruto, o JSON original como string
 /// e o corpo convertido para o tipo [T].
-class WebResponse<T> {
+class WebResponse<T> extends Response<T> {
   final int statusCode;
   final WebResponseStatusType statusType;
   final String? bodyString;
   final T? body;
 
-  /// Cria uma instância de [WebResponse].
-  ///
-  /// [bodyString] deve ser uma string JSON.
-  /// [fromJson] é responsável por converter o JSON em [T].
   WebResponse(
-    this.statusCode, {
+    this.statusCode, [
     this.bodyString,
     T Function(Map<String, dynamic> json)? fromJson,
-  })  : statusType = _resolveStatusType(statusCode),
-        body = _convertBody(bodyString, fromJson);
-
-  bool get isSuccess => statusType == WebResponseStatusType.success;
+    String? message,
+  ])  : statusType = _resolveStatusType(statusCode),
+        body = _convertBody(bodyString, fromJson),
+        super(
+          _resolveStatusType(statusCode) == WebResponseStatusType.success,
+          _convertBody(bodyString, fromJson),
+          message,
+        );
 
   static T? _convertBody<T>(
     String? bodyString,

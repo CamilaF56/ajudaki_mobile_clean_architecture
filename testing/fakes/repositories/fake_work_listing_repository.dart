@@ -10,16 +10,16 @@ class FakeWorkListingRepository extends WorkListingRepository {
 
   @override
   Future<Response<List<WorkListing>>> getAll() async {
-    return response ?? Response.success([]);
+    return response ?? Response(true, []);
   }
 
   @override
   Future<Response<List<WorkListing>>> getByCategory(int categoryId) async {
-    return filterResponse ?? Response.success([]);
+    return filterResponse ?? Response(true, []);
   }
 
   @override
   Future<Response<List<WorkListing>>> getByTerm(String term) async {
-    return response ?? Response.success([]);
+    return response ?? Response(true, []);
   }
 }

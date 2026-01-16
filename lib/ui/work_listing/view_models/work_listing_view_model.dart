@@ -3,7 +3,6 @@ import '../../../data/repositories/work_category_repository.dart';
 import '../../../data/repositories/work_listing_repository.dart';
 import '../../../domain/work_category.dart';
 import '../../../domain/work_listing.dart';
-import '../../../utils/response.dart';
 
 /// ViewModel responsável por gerenciar o estado da listagem de trabalhos.
 ///
@@ -104,8 +103,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workCategoryRepository.getAll();
 
-    if (response is Success<List<WorkCategory>>) {
-      _categories = response.value;
+    if (response.isSuccess) {
+      _categories = response.data!;
     } else {
       _hasCategoryError = true;
     }
@@ -122,8 +121,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getAll();
 
-    if (response is Success<List<WorkListing>>) {
-      _listings = response.value;
+    if (response.isSuccess) {
+      _listings = response.data!;
     } else {
       _listings = [];
       _hasListingError = true;
@@ -156,8 +155,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getByTerm(trimmed);
 
-    if (response is Success<List<WorkListing>>) {
-      _listings = response.value;
+    if (response.isSuccess) {
+      _listings = response.data!;
     } else {
       _listings = [];
       _hasListingError = true;
@@ -184,8 +183,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getByCategory(category.id);
 
-    if (response is Success<List<WorkListing>>) {
-      _listings = response.value;
+    if (response.isSuccess) {
+      _listings = response.data!;
     } else {
       _listings = [];
       _hasListingError = true;
@@ -211,8 +210,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     final response = await _workListingRepository.getAll();
 
-    if (response is Success<List<WorkListing>>) {
-      _listings = response.value;
+    if (response.isSuccess) {
+      _listings = response.data!;
     } else {
       _listings = [];
       _hasListingError = true;

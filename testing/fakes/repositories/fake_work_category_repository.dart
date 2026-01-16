@@ -9,6 +9,6 @@ class FakeWorkCategoryRepository extends WorkCategoryRepository {
 
   @override
   Future<Response<List<WorkCategory>>> getAll() async {
-    return response ?? Response.success([]);
+    return response ?? Response(true, []);
   }
 }

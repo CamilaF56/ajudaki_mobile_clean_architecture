@@ -10,7 +10,7 @@ void main() {
   group('init', () {
     test('carrega categorias e serviços', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.success([
+        ..response = Response(true, [
           WorkListing(
             id: 1,
             title: 'Trocar tomada',
@@ -20,7 +20,7 @@ void main() {
         ]);
 
       final categoryRepo = FakeWorkCategoryRepository()
-        ..response = Response.success([WorkCategory(id: 1, name: 'Elétrica')]);
+        ..response = Response(true, [WorkCategory(id: 1, name: 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -36,10 +36,10 @@ void main() {
 
     test('seta erro quando serviços falham', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.error(Exception('erro serviços'));
+        ..response = Response(false);
 
       final categoryRepo = FakeWorkCategoryRepository()
-        ..response = Response.success([WorkCategory(id: 1, name: 'Elétrica')]);
+        ..response = Response(true, [WorkCategory(id: 1, name: 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -55,7 +55,7 @@ void main() {
 
     test('seta erro quando categorias falham', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.success([
+        ..response = Response(true, [
           WorkListing(
             id: 1,
             title: 'Trocar tomada',
@@ -65,7 +65,7 @@ void main() {
         ]);
 
       final categoryRepo = FakeWorkCategoryRepository()
-        ..response = Response.error(Exception('erro categorias'));
+        ..response = Response(false);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -81,10 +81,10 @@ void main() {
 
     test('aceita listas vazias sem erro', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = const Response.success([]);
+        ..response = Response(true, []);
 
       final categoryRepo = FakeWorkCategoryRepository()
-        ..response = const Response.success([]);
+        ..response = Response(true, []);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -102,7 +102,7 @@ void main() {
   group('search', () {
     test('busca serviços com termo', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.success([
+        ..response = Response(true, [
           WorkListing(
             id: 2,
             title: 'Pintar parede',
@@ -124,7 +124,7 @@ void main() {
 
     test('busca vazia restaura dados', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = const Response.success([]);
+        ..response = Response(true, []);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -138,7 +138,7 @@ void main() {
 
     test('busca seta erro quando falha', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = Response.error(Exception('erro busca'));
+        ..response = Response(false);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -157,7 +157,7 @@ void main() {
       final category = WorkCategory(id: 1, name: 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
-        ..filterResponse = Response.success([
+        ..filterResponse = Response(true, [
           WorkListing(
             id: 3,
             title: 'Instalar chuveiro',
@@ -182,7 +182,7 @@ void main() {
       final category = WorkCategory(id: 1, name: 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
-        ..filterResponse = Response.error(Exception('erro filtro'));
+        ..filterResponse = Response(false);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -199,7 +199,7 @@ void main() {
   group('reset & toggleSearch', () {
     test('reset limpa categoria selecionada', () async {
       final listingRepo = FakeWorkListingRepository()
-        ..response = const Response.success([]);
+        ..response = Response(true, []);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -228,14 +228,16 @@ void main() {
 
   test('loadBackHome limpa categoria e recarrega listagem do cache', () async {
     final listingRepo = FakeWorkListingRepository()
-      ..response = Response.success([
-        WorkListing(
-          id: 10,
-          title: 'Consertar torneira',
-          description: '',
-          estimatedPrice: 80,
-        ),
-      ]);
+      ..response = Response(
+        true,
+        [
+          WorkListing(
+            id: 10,
+            title: 'Consertar torneira',
+            description: '',
+            estimatedPrice: 80,
+          )]
+        );
 
     final viewModel = WorkListingViewModel(
       listingRepo,

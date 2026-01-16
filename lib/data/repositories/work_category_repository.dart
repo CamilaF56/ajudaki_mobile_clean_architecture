@@ -4,13 +4,19 @@ import '../services/api/api_client.dart';
 
 /// Repositório responsável por obter as categorias de trabalho.
 class WorkCategoryRepository {
+  WorkCategoryRepository();
+
   Future<Response<List<WorkCategory>>> getAll() async {
-    final webResponse = await ApiClient.workCategories.getAll();
+  final webResponse = await ApiClient.workCategories.getAll();
 
-    if (!webResponse.isSuccess) {
-      return Response.error(Exception(webResponse.statusCode.toString()));
-    }
+  // Safely map dynamic values into WorkCategory
+  final categories = webResponse.body?.values
+      .map((e) => e) // e is already WorkCategory due to your fromJson
+      .toList();
 
-    return Response.success(webResponse.body!.values.toList());
+  return Response<List<WorkCategory>>(
+    webResponse.isSuccess,
+    categories,
+  );
   }
 }

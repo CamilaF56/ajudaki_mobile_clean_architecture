@@ -19,13 +19,13 @@ class ApiClientOperations {
 
       return WebResponse<T>(
         response.statusCode,
-        bodyString: response.body,
-        fromJson: fromJson
+        response.body,
+        fromJson
       );
     } catch (e) {
       return WebResponse<T>(
         -1,
-        bodyString: e.toString()
+        e.toString()
       );
     }
   }

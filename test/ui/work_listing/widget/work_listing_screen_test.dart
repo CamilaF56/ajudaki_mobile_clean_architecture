@@ -22,7 +22,7 @@ void main() {
 
   testWidgets('mostra lista de serviços quando sucesso', (final tester) async {
     final listingRepo = FakeWorkListingRepository()
-      ..response = Response.success([
+      ..response = Response(true,[
         WorkListing(
           id: 1,
           title: 'Trocar tomada',
@@ -32,7 +32,7 @@ void main() {
       ]);
 
     final categoryRepo = FakeWorkCategoryRepository()
-      ..response = Response.success([WorkCategory(id: 1, name: 'Elétrica')]);
+      ..response = Response(true, [WorkCategory(id: 1, name: 'Elétrica')]);
 
     final vm = WorkListingViewModel(
       listingRepo,
@@ -49,10 +49,10 @@ void main() {
 
   testWidgets('mostra mensagem de erro quando falha', (final tester) async {
     final listingRepo = FakeWorkListingRepository()
-      ..response = Response.error(Exception('erro'));
+      ..response = Response(false);
 
     final categoryRepo = FakeWorkCategoryRepository()
-      ..response = const Response.success([]);
+      ..response = Response(true, []);
 
     final vm = WorkListingViewModel(
       listingRepo,
@@ -70,10 +70,10 @@ void main() {
     final tester,
   ) async {
     final listingRepo = FakeWorkListingRepository()
-      ..response = const Response.success([]);
+      ..response = Response(true, []);
 
     final categoryRepo = FakeWorkCategoryRepository()
-      ..response = const Response.success([]);
+      ..response = Response(true, []);
 
     final vm = WorkListingViewModel(
       listingRepo,
