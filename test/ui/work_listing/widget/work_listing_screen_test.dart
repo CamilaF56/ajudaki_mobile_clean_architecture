@@ -35,8 +35,8 @@ void main() {
       ..response = Response.success([WorkCategory(id: 1, name: 'Elétrica')]);
 
     final vm = WorkListingViewModel(
-      workListingRepository: listingRepo,
-      workCategoryRepository: categoryRepo,
+      listingRepo,
+      categoryRepo,
     );
 
     await tester.pumpWidget(makeTestableWidget(vm));
@@ -55,8 +55,8 @@ void main() {
       ..response = const Response.success([]);
 
     final vm = WorkListingViewModel(
-      workListingRepository: listingRepo,
-      workCategoryRepository: categoryRepo,
+      listingRepo,
+      categoryRepo,
     );
 
     await tester.pumpWidget(makeTestableWidget(vm));
@@ -76,8 +76,8 @@ void main() {
       ..response = const Response.success([]);
 
     final vm = WorkListingViewModel(
-      workListingRepository: listingRepo,
-      workCategoryRepository: categoryRepo,
+      listingRepo,
+      categoryRepo,
     );
 
     await tester.pumpWidget(makeTestableWidget(vm));

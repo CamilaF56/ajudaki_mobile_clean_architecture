@@ -23,8 +23,8 @@ void main() {
         ..response = Response.success([WorkCategory(id: 1, name: 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: categoryRepo,
+        listingRepo,
+        categoryRepo,
       );
 
       await viewModel.init();
@@ -42,8 +42,8 @@ void main() {
         ..response = Response.success([WorkCategory(id: 1, name: 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: categoryRepo,
+        listingRepo,
+        categoryRepo,
       );
 
       await viewModel.init();
@@ -68,8 +68,8 @@ void main() {
         ..response = Response.error(Exception('erro categorias'));
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: categoryRepo,
+        listingRepo,
+        categoryRepo,
       );
 
       await viewModel.init();
@@ -87,8 +87,8 @@ void main() {
         ..response = const Response.success([]);
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: categoryRepo,
+        listingRepo,
+        categoryRepo,
       );
 
       await viewModel.init();
@@ -112,8 +112,8 @@ void main() {
         ]);
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: FakeWorkCategoryRepository(),
+        listingRepo,
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.search('pintar');
@@ -127,8 +127,8 @@ void main() {
         ..response = const Response.success([]);
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: FakeWorkCategoryRepository(),
+        listingRepo,
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.search('');
@@ -141,8 +141,8 @@ void main() {
         ..response = Response.error(Exception('erro busca'));
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: FakeWorkCategoryRepository(),
+        listingRepo,
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.search('erro');
@@ -167,8 +167,8 @@ void main() {
         ]);
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: FakeWorkCategoryRepository(),
+        listingRepo,
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.filterByCategory(category);
@@ -185,8 +185,8 @@ void main() {
         ..filterResponse = Response.error(Exception('erro filtro'));
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: FakeWorkCategoryRepository(),
+        listingRepo,
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.filterByCategory(category);
@@ -202,8 +202,8 @@ void main() {
         ..response = const Response.success([]);
 
       final viewModel = WorkListingViewModel(
-        workListingRepository: listingRepo,
-        workCategoryRepository: FakeWorkCategoryRepository(),
+        listingRepo,
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.reset();
@@ -213,8 +213,8 @@ void main() {
 
     test('toggleSearch ativa e desativa busca', () async {
       final viewModel = WorkListingViewModel(
-        workListingRepository: FakeWorkListingRepository(),
-        workCategoryRepository: FakeWorkCategoryRepository(),
+        FakeWorkListingRepository(),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.toggleSearch();
@@ -238,8 +238,8 @@ void main() {
       ]);
 
     final viewModel = WorkListingViewModel(
-      workListingRepository: listingRepo,
-      workCategoryRepository: FakeWorkCategoryRepository(),
+      listingRepo,
+      FakeWorkCategoryRepository(),
     );
 
     await viewModel.filterByCategory(WorkCategory(id: 1, name: 'Hidráulica'));
