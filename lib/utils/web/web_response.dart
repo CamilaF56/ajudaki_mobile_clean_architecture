@@ -5,17 +5,10 @@ import 'package:ajudaki_mobile_clean_architecture/utils/web/web_response_status_
 ///
 /// Contém o código HTTP bruto, o JSON original como string
 /// e o corpo convertido para o tipo [T].
-sealed class WebResponse<T> {
-  /// Código HTTP retornado pela API
+class WebResponse<T> {
   final int statusCode;
-
-  /// Tipo categorizado da resposta HTTP
   final WebResponseStatusType statusType;
-
-  /// Corpo da resposta em formato JSON (string bruta)
   final String? bodyString;
-
-  /// Corpo da resposta convertido para [T]
   final T? body;
 
   /// Cria uma instância de [WebResponse].
@@ -29,7 +22,6 @@ sealed class WebResponse<T> {
   })  : statusType = _resolveStatusType(statusCode),
         body = _convertBody(bodyString, fromJson);
 
-  /// Indica se a resposta foi bem-sucedida (qualquer 2xx).
   bool get isSuccess => statusType == WebResponseStatusType.success;
 
   static T? _convertBody<T>(
