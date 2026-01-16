@@ -14,11 +14,9 @@ class WorkListingRepository {
   }
 
   Future<Response<List<WorkListing>>> getByCategory(
-    final int categoryId
-  ) async {
+    final int categoryId) async {
     final queryParameters = <String, String?>{};
     queryParameters['workCategoryId'] = categoryId.toString();
-
     final webResponse = await ApiClient.workListings.search(queryParameters);
 
     if (!webResponse.isSuccess) {
@@ -30,7 +28,7 @@ class WorkListingRepository {
 
   Future<Response<List<WorkListing>>> getByTerm(
     final String terms) async {
-      final queryParameters = <String, String?>{};
+    final queryParameters = <String, String?>{};
     queryParameters['terms'] = terms;
 
     final webResponse = await ApiClient.workListings.search(queryParameters);

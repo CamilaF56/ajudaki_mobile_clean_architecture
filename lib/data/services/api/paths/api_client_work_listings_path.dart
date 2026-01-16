@@ -1,7 +1,6 @@
 import 'package:ajudaki_mobile_clean_architecture/utils/web/web_response.dart';
-
-import '../api_client_operations.dart';
 import '../../../../domain/work_listing.dart';
+import '../api_client_operations.dart';
 import 'api_client_path.dart';
 
 class ApiClientWorkListingsPath extends ApiClientPath<WorkListing> {
