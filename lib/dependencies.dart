@@ -15,10 +15,10 @@ List<SingleChildWidget> get providersRemote {
     Provider.value(value: ApiClient),
 
     /// Provider do repositório de categorias de trabalho.
-    Provider(create: (_) => WorkCategoryRepository),
+    Provider(create: (_) => WorkCategoryRepository()),
 
     /// Provider do repositório de anúncios de trabalho.
-    Provider(create: (_) => WorkListingRepository),
+    Provider(create: (_) => WorkListingRepository()),
 
     /// Provider do ViewModel responsável pela listagem de trabalhos.
     ChangeNotifierProvider(
