@@ -6,17 +6,18 @@ import '../services/api/api_client.dart';
 class WorkCategoryRepository {
   WorkCategoryRepository();
 
-  Future<Response<List<WorkCategory>>> getAll() async {
-  final webResponse = await ApiClient.workCategories.getAll();
+  List<WorkCategory>? cache;
 
-  // Safely map dynamic values into WorkCategory
-  final categories = webResponse.body?.values
-      .map((e) => e) // e is already WorkCategory due to your fromJson
-      .toList();
+  Future<Response<List<WorkCategory>>> getAll() async {
+  if (cache != null) {
+      return Response(true, cache);
+    }
+
+  final webResponse = await ApiClient.workCategories.getAll();
 
   return Response<List<WorkCategory>>(
     webResponse.isSuccess,
-    categories,
+    webResponse.body?.values.toList(),
   );
   }
 }
