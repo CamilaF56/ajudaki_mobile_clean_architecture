@@ -10,14 +10,12 @@ class WebResponse<T> extends Response<T> {
   WebResponse(
     this.statusCode, [
     this.bodyString,
-    final T Function(Map<String, dynamic> json)? fromJson,
-    final String? message,
+    final T Function(Map<String, dynamic> json)? fromJson
   ])  : statusType = _resolveStatusType(statusCode),
         body = _convertBody(bodyString, fromJson),
         super(
           _resolveStatusType(statusCode) == WebResponseStatusType.success,
-          _convertBody(bodyString, fromJson),
-          message,
+          _convertBody(bodyString, fromJson)
         );
 
   final int statusCode;
