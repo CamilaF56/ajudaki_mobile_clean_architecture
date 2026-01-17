@@ -1,5 +1,5 @@
 import '../../domain/work_category.dart';
-import '../../utils/response.dart';
+import '../../utils/result.dart';
 import '../services/api/paths/api_client_work_categories_path.dart';
 
 /// Repositório responsável por obter as categorias de trabalho.
@@ -10,16 +10,16 @@ class WorkCategoryRepository {
   final ApiClientWorkCategoriesPath _apiPath;
   List<WorkCategory>? _cache;
 
-  Future<Response<List<WorkCategory>>> getAll() async {
+  Future<Result<List<WorkCategory>>> getAll() async {
     if (_cache != null) {
-      return Response(true, _cache);
+      return Result(true, _cache);
     }
 
     final webResponse = await _apiPath.getAll();
 
-    return Response<List<WorkCategory>>(
+    return Result<List<WorkCategory>>(
       webResponse.isSuccess,
-      webResponse.body?.values.toList(),
+      webResponse.value?.values.toList(),
     );
   }
 }

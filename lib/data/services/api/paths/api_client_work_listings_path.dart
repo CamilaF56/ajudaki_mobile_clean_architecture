@@ -1,5 +1,5 @@
 import '../../../../domain/work_listing.dart';
-import '../../../../utils/web/web_response.dart';
+import '../../../../utils/web/web_result.dart';
 import '../api_client_operations.dart';
 import 'api_client_path.dart';
 
@@ -10,7 +10,7 @@ class ApiClientWorkListingsPath extends ApiClientPath<WorkListing> {
           'worklistings',
           WorkListing.fromJson);
 
-  Future<WebResponse<Map<String, WorkListing>>> search(
+  Future<WebResult<Map<String, WorkListing>>> search(
     final Map<String, String?> queryParameters ) async {
     return operations.get<Map<String, WorkListing>>(
       resource,

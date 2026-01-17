@@ -3,7 +3,7 @@ import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/view_models/work_listing_view_model.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_entry.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_screen.dart';
-import 'package:ajudaki_mobile_clean_architecture/utils/response.dart';
+import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +22,7 @@ void main() {
 
   testWidgets('mostra lista de serviços quando sucesso', (final tester) async {
     final listingRepo = FakeWorkListingRepository(null)
-      ..response = Response(true,[
+      ..response = Result(true,[
         WorkListing(
           1,
           'Trocar tomada',
@@ -32,7 +32,7 @@ void main() {
       ]);
 
     final categoryRepo = FakeWorkCategoryRepository(null)
-      ..response = Response(true, [WorkCategory(1, 'Elétrica')]);
+      ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
     final vm = WorkListingViewModel(
       listingRepo,
@@ -49,10 +49,10 @@ void main() {
 
   testWidgets('mostra mensagem de erro quando falha', (final tester) async {
     final listingRepo = FakeWorkListingRepository(null)
-      ..response = Response(false);
+      ..response = Result(false);
 
     final categoryRepo = FakeWorkCategoryRepository(null)
-      ..response = Response(true, []);
+      ..response = Result(true, []);
 
     final vm = WorkListingViewModel(
       listingRepo,
@@ -70,10 +70,10 @@ void main() {
     final tester,
   ) async {
     final listingRepo = FakeWorkListingRepository(null)
-      ..response = Response(true, []);
+      ..response = Result(true, []);
 
     final categoryRepo = FakeWorkCategoryRepository(null)
-      ..response = Response(true, []);
+      ..response = Result(true, []);
 
     final vm = WorkListingViewModel(
       listingRepo,

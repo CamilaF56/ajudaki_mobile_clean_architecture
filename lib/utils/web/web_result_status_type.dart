@@ -7,7 +7,7 @@
 /// - 4xx → Erro do cliente
 /// - 5xx → Erro do servidor
 /// - Outros → Desconhecido
-enum WebResponseStatusType {
+enum WebResultStatusType {
   /// Resposta informacional (1xx)
   informational,
 

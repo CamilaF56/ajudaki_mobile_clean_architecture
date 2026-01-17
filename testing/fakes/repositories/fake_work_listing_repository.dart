@@ -1,25 +1,25 @@
 import 'package:ajudaki_mobile_clean_architecture/data/repositories/work_listing_repository.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
-import 'package:ajudaki_mobile_clean_architecture/utils/response.dart';
+import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 
 class FakeWorkListingRepository extends WorkListingRepository {
   FakeWorkListingRepository(_apiPath) : super(_apiPath);
 
-  Response<List<WorkListing>>? response;
-  Response<List<WorkListing>>? filterResponse;
+  Result<List<WorkListing>>? response;
+  Result<List<WorkListing>>? filterResponse;
 
   @override
-  Future<Response<List<WorkListing>>> getAll() async {
-    return response ?? Response(true, []);
+  Future<Result<List<WorkListing>>> getAll() async {
+    return response ?? Result(true, []);
   }
 
   @override
-  Future<Response<List<WorkListing>>> getByCategory(int categoryId) async {
-    return filterResponse ?? Response(true, []);
+  Future<Result<List<WorkListing>>> getByCategory(int categoryId) async {
+    return filterResponse ?? Result(true, []);
   }
 
   @override
-  Future<Response<List<WorkListing>>> getByTerm(String term) async {
-    return response ?? Response(true, []);
+  Future<Result<List<WorkListing>>> getByTerm(String term) async {
+    return response ?? Result(true, []);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import '../../../utils/web/web_response.dart';
+import '../../../utils/web/web_result.dart';
 import 'api_client_config.dart';
 
 class ApiClientOperations {
@@ -7,7 +7,7 @@ class ApiClientOperations {
 
   final ApiClientConfig _config;
 
-  Future<WebResponse<T>> get<T>(
+  Future<WebResult<T>> get<T>(
     final String path,
     final T Function(dynamic json) fromJson, {
     final Map<String, String?>? queryParameters
@@ -21,13 +21,13 @@ class ApiClientOperations {
     try {
       final response = await http.get(uri);
 
-      return WebResponse<T>(
+      return WebResult<T>(
         response.statusCode,
         response.body,
         fromJson
       );
     } on Exception catch (e) {
-      return WebResponse<T>(
+      return WebResult<T>(
         -1,
         e.toString()
       );

@@ -1,27 +1,25 @@
 import 'dart:convert';
-import '../response.dart';
-import 'web_response_status_type.dart';
+import '../result.dart';
+import 'web_result_status_type.dart';
 
-/// Classe base selada que representa uma resposta de uma API web.
+/// Classe que representa uma resposta de uma API web.
 ///
 /// Contém o código HTTP bruto, o JSON original como string
 /// e o corpo convertido para o tipo [T].
-class WebResponse<T> extends Response<T> {
-  WebResponse(
+class WebResult<T> extends Result<T> {
+  WebResult(
     this.statusCode, [
-    this.bodyString,
+    this.body,
     final T Function(Map<String, dynamic> json)? fromJson
   ])  : statusType = _resolveStatusType(statusCode),
-        body = _convertBody(bodyString, fromJson),
         super(
-          _resolveStatusType(statusCode) == WebResponseStatusType.success,
-          _convertBody(bodyString, fromJson)
+          _resolveStatusType(statusCode) == WebResultStatusType.success,
+          _convertBody(body, fromJson)
         );
 
   final int statusCode;
-  final WebResponseStatusType statusType;
-  final String? bodyString;
-  final T? body;
+  final WebResultStatusType statusType;
+  final String? body;
 
   static T? _convertBody<T>(
     final String? bodyString,
@@ -43,22 +41,22 @@ class WebResponse<T> extends Response<T> {
   }
 
   /// Resolve o tipo da resposta HTTP com base no código.
-  static WebResponseStatusType _resolveStatusType(final int code) {
+  static WebResultStatusType _resolveStatusType(final int code) {
     if (code >= 100 && code < 200) {
-      return WebResponseStatusType.informational;
+      return WebResultStatusType.informational;
     }
     if (code >= 200 && code < 300) {
-      return WebResponseStatusType.success;
+      return WebResultStatusType.success;
     }
     if (code >= 300 && code < 400) {
-      return WebResponseStatusType.redirection;
+      return WebResultStatusType.redirection;
     }
     if (code >= 400 && code < 500) {
-      return WebResponseStatusType.clientError;
+      return WebResultStatusType.clientError;
     }
     if (code >= 500 && code < 600) {
-      return WebResponseStatusType.serverError;
+      return WebResultStatusType.serverError;
     }
-    return WebResponseStatusType.unknown;
+    return WebResultStatusType.unknown;
   }
 }

@@ -1,5 +1,5 @@
 import '../../domain/work_listing.dart';
-import '../../utils/response.dart';
+import '../../utils/result.dart';
 import '../services/api/paths/api_client_work_listings_path.dart';
 
 /// Repositório responsável por obter os anúncios de trabalho.
@@ -14,22 +14,22 @@ class WorkListingRepository {
   ///
   /// Caso exista cache, os dados são retornados diretamente.
   /// Caso contrário, a lista é buscada na API.
-  Future<Response<List<WorkListing>>> getAll() async {
+  Future<Result<List<WorkListing>>> getAll() async {
     if (_cache == null) {
       final webResponse = await _apiPath.getAll();
 
       if (webResponse.isSuccess) {
-        _cache = webResponse.body?.values.toList();
+        _cache = webResponse.value?.values.toList();
       }
     }
     
-    return Response(true, _cache);
+    return Result(true, _cache);
   }
 
   /// Retorna os anúncios filtrados por categoria.
   ///
   /// Caso exista cache, o filtro é aplicado localmente.
-  Future<Response<List<WorkListing>>> getByCategory(
+  Future<Result<List<WorkListing>>> getByCategory(
     final int categoryId) async {
       if (_cache != null) {
       final filtered = _cache!
@@ -39,32 +39,32 @@ class WorkListingRepository {
           )
           .toList();
 
-      return Response(true, filtered);
+      return Result(true, filtered);
     }
 
     final queryParameters = <String, String?>{};
     queryParameters['workCategoryId'] = categoryId.toString();
     final webResponse = await _apiPath.search(queryParameters);
 
-    return Response<List<WorkListing>>(
+    return Result<List<WorkListing>>(
       webResponse.isSuccess,
-      webResponse.body?.values.toList()
+      webResponse.value?.values.toList()
     );
   }
 
   /// Retorna os anúncios filtrados pelo termo de busca.
   ///
   /// A busca é realizada via API.
-  Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
+  Future<Result<List<WorkListing>>> getByTerm(final String terms) async {
     final queryParameters = <String, String?>{};
     queryParameters['terms'] = terms;
     final result = await _apiPath.search(queryParameters);
 
     List<WorkListing>? list;
     if (result.isSuccess) {
-      list = result.body?.values.toList();
+      list = result.value?.values.toList();
     }
 
-    return Response(true, list);
+    return Result(true, list);
   }
 }
