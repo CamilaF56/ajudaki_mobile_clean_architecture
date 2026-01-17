@@ -5,16 +5,16 @@ class FakeApiClientWorkListingsPath extends FakeApiClientPath<WorkListing> {
   FakeApiClientWorkListingsPath()
     : super({
         "1": WorkListing(
-          id: 1,
-          title: "Trocar tomada",
-          description: "",
-          estimatedPrice: 50,
+          1,
+          "Trocar tomada",
+          "",
+          50,
         ),
         "2": WorkListing(
-          id: 2,
-          title: "Instalar lâmpada",
-          description: "",
-          estimatedPrice: 40,
-        ),
+          2,
+          "Instalar lâmpada",
+          "",
+          40,
+        )
       });
 }

@@ -3,24 +3,24 @@ import 'model.dart';
 /// Representa uma pessoa no sistema.
 class Person extends Model {
   /// Cria uma instância de [Person].
-  Person({
-    required super.id,
-    required this.name,
-    required this.cpf,
-    required this.phoneNumber,
-    required this.cep,
-    required this.pictureUrl,
-  });
+  Person(
+    super.id,
+    this.name,
+    this.cpf,
+    this.phoneNumber,
+    this.cep,
+    this.pictureUrl,
+  );
 
   /// Cria uma instância de [Person] a partir de um JSON.
   factory Person.fromJson(final Map<String, dynamic> json) {
     return Person(
-      id: json['Id'],
-      name: json['Name'],
-      cpf: json['Cpf'],
-      phoneNumber: json['PhoneNumber'],
-      cep: json['Cep'],
-      pictureUrl: json['PictureUrl'],
+      json['Id'],
+      json['Name'],
+      json['Cpf'],
+      json['PhoneNumber'],
+      json['Cep'],
+      json['PictureUrl'],
     );
   }
 

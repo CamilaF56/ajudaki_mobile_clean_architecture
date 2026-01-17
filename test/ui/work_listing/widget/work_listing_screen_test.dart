@@ -24,15 +24,15 @@ void main() {
     final listingRepo = FakeWorkListingRepository()
       ..response = Response(true,[
         WorkListing(
-          id: 1,
-          title: 'Trocar tomada',
-          description: '',
-          estimatedPrice: 50,
+          1,
+          'Trocar tomada',
+          '',
+          50
         ),
       ]);
 
     final categoryRepo = FakeWorkCategoryRepository()
-      ..response = Response(true, [WorkCategory(id: 1, name: 'Elétrica')]);
+      ..response = Response(true, [WorkCategory(1, 'Elétrica')]);
 
     final vm = WorkListingViewModel(
       listingRepo,

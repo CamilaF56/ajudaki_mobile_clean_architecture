@@ -3,6 +3,8 @@ import './paths/api_client_work_listings_path.dart';
 
 /// Cliente responsável pela comunicação HTTP com a API backend.
 class ApiClient {
+  ApiClient();
+  
   static final ApiClientWorkCategoriesPath workCategories = ApiClientWorkCategoriesPath();
   static final ApiClientWorkListingsPath workListings = ApiClientWorkListingsPath();
 

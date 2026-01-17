@@ -12,15 +12,15 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Response(true, [
           WorkListing(
-            id: 1,
-            title: 'Trocar tomada',
-            description: '',
-            estimatedPrice: 50,
+            1,
+            'Trocar tomada',
+            '',
+            50
           ),
         ]);
 
       final categoryRepo = FakeWorkCategoryRepository()
-        ..response = Response(true, [WorkCategory(id: 1, name: 'Elétrica')]);
+        ..response = Response(true, [WorkCategory(1, 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -39,7 +39,7 @@ void main() {
         ..response = Response(false);
 
       final categoryRepo = FakeWorkCategoryRepository()
-        ..response = Response(true, [WorkCategory(id: 1, name: 'Elétrica')]);
+        ..response = Response(true, [WorkCategory(1, 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -57,10 +57,10 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Response(true, [
           WorkListing(
-            id: 1,
-            title: 'Trocar tomada',
-            description: '',
-            estimatedPrice: 50,
+            1,
+            'Trocar tomada',
+            '',
+            50
           ),
         ]);
 
@@ -104,10 +104,10 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Response(true, [
           WorkListing(
-            id: 2,
-            title: 'Pintar parede',
-            description: '',
-            estimatedPrice: 200,
+            2,
+            'Pintar parede',
+            '',
+            200,
           ),
         ]);
 
@@ -154,15 +154,15 @@ void main() {
 
   group('filterByCategory', () {
     test('filtra serviços por categoria', () async {
-      final category = WorkCategory(id: 1, name: 'Elétrica');
+      final category = WorkCategory(1, 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
         ..filterResponse = Response(true, [
           WorkListing(
-            id: 3,
-            title: 'Instalar chuveiro',
-            description: '',
-            estimatedPrice: 120,
+            3,
+            'Instalar chuveiro',
+            '',
+            120,
           ),
         ]);
 
@@ -179,7 +179,7 @@ void main() {
     });
 
     test('filtro seta erro quando falha', () async {
-      final category = WorkCategory(id: 1, name: 'Elétrica');
+      final category = WorkCategory(1, 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
         ..filterResponse = Response(false);
@@ -232,10 +232,10 @@ void main() {
         true,
         [
           WorkListing(
-            id: 10,
-            title: 'Consertar torneira',
-            description: '',
-            estimatedPrice: 80,
+            10,
+            'Consertar torneira',
+            '',
+            80
           )]
         );
 
@@ -244,7 +244,7 @@ void main() {
       FakeWorkCategoryRepository(),
     );
 
-    await viewModel.filterByCategory(WorkCategory(id: 1, name: 'Hidráulica'));
+    await viewModel.filterByCategory(WorkCategory(1, 'Hidráulica'));
 
     expect(viewModel.selectedCategory, isNotNull);
 

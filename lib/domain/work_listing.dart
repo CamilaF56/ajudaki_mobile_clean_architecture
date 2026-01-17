@@ -5,24 +5,24 @@ import 'work_type.dart';
 /// Representa um anúncio de trabalho.
 class WorkListing extends Model {
   /// Cria uma instância de [WorkListing].
-  WorkListing({
-    required super.id,
-    required this.title,
-    required this.description,
-    required this.estimatedPrice,
-    this.workType,
-    this.professional,
-  });
+  WorkListing(
+    super.id,
+    this.title,
+    this.description,
+    this.estimatedPrice,
+    [this.workType,
+    this.professional]
+  );
 
   /// Cria uma instância de [WorkListing] a partir de um JSON.
   factory WorkListing.fromJson(final Map<String, dynamic> json) {
     return WorkListing(
-      id: json['Id'],
-      title: json['Title'],
-      description: json['Description'],
-      estimatedPrice: json['EstimatedPrice'],
-      workType: WorkType.fromJson(json['WorkType']),
-      professional: Professional.fromJson(json['Professional']),
+      json['Id'],
+      json['Title'],
+      json['Description'],
+      json['EstimatedPrice'],
+      WorkType.fromJson(json['WorkType']),
+      Professional.fromJson(json['Professional']),
     );
   }
 

@@ -4,14 +4,18 @@ import 'work_category.dart';
 /// Representa um tipo de trabalho.
 class WorkType extends Model {
   /// Cria uma instância de [WorkType].
-  WorkType({required super.id, required this.name, required this.workCategory});
+  WorkType(
+    super.id,
+    this.name,
+    this.workCategory
+  );
 
   /// Cria uma instância de [WorkType] a partir de um JSON.
   factory WorkType.fromJson(final Map<String, dynamic> json) {
     return WorkType(
-      id: json['Id'],
-      name: json['Name'],
-      workCategory: WorkCategory.fromJson(json['WorkCategory']),
+      json['Id'],
+      json['Name'],
+      WorkCategory.fromJson(json['WorkCategory']),
     );
   }
 

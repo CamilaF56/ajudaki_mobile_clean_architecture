@@ -5,14 +5,14 @@ import 'person.dart';
 /// Especializa a entidade [Person].
 class Professional extends Person {
   /// Cria uma instância de [Professional].
-  Professional({
-    required super.id,
-    required super.name,
-    required super.cpf,
-    required super.phoneNumber,
-    required super.cep,
-    required super.pictureUrl,
-  });
+  Professional(
+    super.id,
+    super.name,
+    super.cpf,
+    super.phoneNumber,
+    super.cep,
+    super.pictureUrl,
+  );
 
   /// Cria uma instância de [Professional] a partir de um JSON.
   ///
@@ -21,12 +21,12 @@ class Professional extends Person {
     final person = Person.fromJson(json);
 
     return Professional(
-      id: person.id,
-      name: person.name,
-      cpf: person.cpf,
-      phoneNumber: person.phoneNumber,
-      cep: person.cep,
-      pictureUrl: person.pictureUrl,
+      person.id,
+      person.name,
+      person.cpf,
+      person.phoneNumber,
+      person.cep,
+      person.pictureUrl,
     );
   }
 }
