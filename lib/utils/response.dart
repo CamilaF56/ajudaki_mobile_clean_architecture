@@ -1,11 +1,11 @@
 class Response<T> {
-  final bool isSuccess;
-  final T? data;
-  final String? message;
-
-  Response(
+    Response(
     this.isSuccess, [
       this.data,
       this.message]
   );
+
+  final bool isSuccess;
+  final T? data;
+  final String? message;
 }

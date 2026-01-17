@@ -1,22 +1,17 @@
 import 'dart:convert';
-import 'package:ajudaki_mobile_clean_architecture/utils/response.dart';
-import 'package:ajudaki_mobile_clean_architecture/utils/web/web_response_status_type.dart';
+import '../response.dart';
+import 'web_response_status_type.dart';
 
 /// Classe base selada que representa uma resposta de uma API web.
 ///
 /// Contém o código HTTP bruto, o JSON original como string
 /// e o corpo convertido para o tipo [T].
 class WebResponse<T> extends Response<T> {
-  final int statusCode;
-  final WebResponseStatusType statusType;
-  final String? bodyString;
-  final T? body;
-
   WebResponse(
     this.statusCode, [
     this.bodyString,
-    T Function(Map<String, dynamic> json)? fromJson,
-    String? message,
+    final T Function(Map<String, dynamic> json)? fromJson,
+    final String? message,
   ])  : statusType = _resolveStatusType(statusCode),
         body = _convertBody(bodyString, fromJson),
         super(
@@ -25,9 +20,14 @@ class WebResponse<T> extends Response<T> {
           message,
         );
 
+  final int statusCode;
+  final WebResponseStatusType statusType;
+  final String? bodyString;
+  final T? body;
+
   static T? _convertBody<T>(
-    String? bodyString,
-    T Function(Map<String, dynamic> json)? fromJson,
+    final String? bodyString,
+    final T Function(Map<String, dynamic> json)? fromJson,
   ) {
     if (bodyString == null || fromJson == null) {
       return null;
@@ -45,7 +45,7 @@ class WebResponse<T> extends Response<T> {
   }
 
   /// Resolve o tipo da resposta HTTP com base no código.
-  static WebResponseStatusType _resolveStatusType(int code) {
+  static WebResponseStatusType _resolveStatusType(final int code) {
     if (code >= 100 && code < 200) {
       return WebResponseStatusType.informational;
     }

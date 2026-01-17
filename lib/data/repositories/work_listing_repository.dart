@@ -1,13 +1,13 @@
 import '../../domain/work_listing.dart';
 import '../../utils/response.dart';
-import '../services/api/api_client.dart';
+import '../services/api/paths/api_client_work_listings_path.dart';
 
 /// Repositório responsável por obter os anúncios de trabalho.
 class WorkListingRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
-  WorkListingRepository(this._apiClient);
+  WorkListingRepository(this._apiPath);
 
-  final ApiClient _apiClient;
+  final ApiClientWorkListingsPath _apiPath;
   List<WorkListing>? _cache;
 
   /// Retorna todos os anúncios de trabalho.
@@ -16,7 +16,7 @@ class WorkListingRepository {
   /// Caso contrário, a lista é buscada na API.
   Future<Response<List<WorkListing>>> getAll() async {
     if (_cache == null) {
-      final webResponse = await _apiClient.workListings.getAll();
+      final webResponse = await _apiPath.getAll();
 
       if (webResponse.isSuccess) {
         _cache = webResponse.body?.values.toList();
@@ -44,7 +44,7 @@ class WorkListingRepository {
 
     final queryParameters = <String, String?>{};
     queryParameters['workCategoryId'] = categoryId.toString();
-    final webResponse = await _apiClient.workListings.search(queryParameters);
+    final webResponse = await _apiPath.search(queryParameters);
 
     return Response<List<WorkListing>>(
       webResponse.isSuccess,
@@ -58,7 +58,7 @@ class WorkListingRepository {
   Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
     final queryParameters = <String, String?>{};
     queryParameters['terms'] = terms;
-    final result = await _apiClient.workListings.search(queryParameters);
+    final result = await _apiPath.search(queryParameters);
 
     List<WorkListing>? list;
     if (result.isSuccess) {

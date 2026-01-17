@@ -1,16 +1,20 @@
 import 'package:http/http.dart' as http;
-import 'api_client.dart';
 import '../../../utils/web/web_response.dart';
+import 'api_client_config.dart';
 
 class ApiClientOperations {
-  static Future<WebResponse<T>> get<T>(
-    String path,
-    T Function(dynamic json) fromJson, {
-    Map<String, String?>? queryParameters
+  ApiClientOperations(this._config);
+
+  final ApiClientConfig _config;
+
+  Future<WebResponse<T>> get<T>(
+    final String path,
+    final T Function(dynamic json) fromJson, {
+    final Map<String, String?>? queryParameters
   }) async {
     final uri = Uri.http(
-      '${ApiClient.host}:${ApiClient.port}',
-      '${ApiClient.basePath}/$path',
+      _config.authority,
+      _config.createUnencodedPath(path),
       queryParameters
     );
 
@@ -22,7 +26,7 @@ class ApiClientOperations {
         response.body,
         fromJson
       );
-    } catch (e) {
+    } on Exception catch (e) {
       return WebResponse<T>(
         -1,
         e.toString()

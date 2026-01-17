@@ -3,7 +3,7 @@ import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/response.dart';
 
 class FakeWorkListingRepository extends WorkListingRepository {
-  FakeWorkListingRepository() : super();
+  FakeWorkListingRepository(_apiPath) : super(_apiPath);
 
   Response<List<WorkListing>>? response;
   Response<List<WorkListing>>? filterResponse;

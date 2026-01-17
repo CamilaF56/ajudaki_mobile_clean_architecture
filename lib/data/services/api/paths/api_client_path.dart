@@ -2,22 +2,21 @@ import '../../../../utils/web/web_response.dart';
 import '../api_client_operations.dart';
 
 class ApiClientPath<T> {
-  ApiClientPath(
-    this.resource,
-    this.fromJson);
+  ApiClientPath(this.operations, this.resource, this.fromJson);
 
+  final ApiClientOperations operations;
   final String resource;
   final T Function(Map<String, dynamic> json) fromJson;
 
   Future<WebResponse<Map<String, T>>> getAll({
-    Map<String, String>? queryParameters,
+    final Map<String, String>? queryParameters,
   }) async {
-    return await ApiClientOperations.get<Map<String, T>>(
+    return operations.get<Map<String, T>>(
       resource,
-      (json) {
+      (final json) {
       final map = json as Map<String, dynamic>;
       return map.map<String, T>(
-        (key, value) => MapEntry(
+        (final key, final value) => MapEntry(
           key,
           fromJson(value as Map<String, dynamic>),
         ),
