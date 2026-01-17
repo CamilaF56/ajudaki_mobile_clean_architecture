@@ -5,8 +5,11 @@ import './paths/api_client_work_listings_path.dart';
 class ApiClient {
   ApiClient();
   
-  static final ApiClientWorkCategoriesPath workCategories = ApiClientWorkCategoriesPath();
-  static final ApiClientWorkListingsPath workListings = ApiClientWorkListingsPath();
+  final ApiClientWorkCategoriesPath workCategories
+  = ApiClientWorkCategoriesPath();
+
+  final ApiClientWorkListingsPath workListings
+  = ApiClientWorkListingsPath();
 
   static const String host = 'localhost';
   static const String basePath = '/api';

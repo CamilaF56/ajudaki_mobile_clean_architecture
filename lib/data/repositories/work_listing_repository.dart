@@ -5,8 +5,9 @@ import '../services/api/api_client.dart';
 /// Repositório responsável por obter os anúncios de trabalho.
 class WorkListingRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
-  WorkListingRepository();
+  WorkListingRepository(this._apiClient);
 
+  final ApiClient _apiClient;
   List<WorkListing>? _cache;
 
   /// Retorna todos os anúncios de trabalho.
@@ -14,15 +15,15 @@ class WorkListingRepository {
   /// Caso exista cache, os dados são retornados diretamente.
   /// Caso contrário, a lista é buscada na API.
   Future<Response<List<WorkListing>>> getAll() async {
-        if (_cache == null) {
-      final webResponse = await ApiClient.workListings.getAll();
+    if (_cache == null) {
+      final webResponse = await _apiClient.workListings.getAll();
 
       if (webResponse.isSuccess) {
-          _cache = webResponse.body?.values.toList();
-        }
-    };
+        _cache = webResponse.body?.values.toList();
+      }
+    }
     
-    return Response(true, _cache!);
+    return Response(true, _cache);
   }
 
   /// Retorna os anúncios filtrados por categoria.
@@ -43,7 +44,7 @@ class WorkListingRepository {
 
     final queryParameters = <String, String?>{};
     queryParameters['workCategoryId'] = categoryId.toString();
-    final webResponse = await ApiClient.workListings.search(queryParameters);
+    final webResponse = await _apiClient.workListings.search(queryParameters);
 
     return Response<List<WorkListing>>(
       webResponse.isSuccess,
@@ -57,12 +58,12 @@ class WorkListingRepository {
   Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
     final queryParameters = <String, String?>{};
     queryParameters['terms'] = terms;
-    final result = await ApiClient.workListings.search(queryParameters);
+    final result = await _apiClient.workListings.search(queryParameters);
 
-    List<WorkListing>? list = null;
+    List<WorkListing>? list;
     if (result.isSuccess) {
       list = result.body?.values.toList();
-    };
+    }
 
     return Response(true, list);
   }

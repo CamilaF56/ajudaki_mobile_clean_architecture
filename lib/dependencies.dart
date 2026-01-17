@@ -10,15 +10,17 @@ import 'data/services/api/api_client.dart';
 /// Centraliza a criação e injeção de dependências relacionadas
 /// à comunicação com a API e aos repositórios.
 List<SingleChildWidget> get providersRemote {
+  final apiClient = ApiClient();
+
   return [
     /// Provider do cliente de API.
-    Provider.value(value: ApiClient),
+    Provider.value(value: apiClient),
 
     /// Provider do repositório de categorias de trabalho.
-    Provider(create: (_) => WorkCategoryRepository()),
+    Provider(create: (_) => WorkCategoryRepository(apiClient)),
 
     /// Provider do repositório de anúncios de trabalho.
-    Provider(create: (_) => WorkListingRepository()),
+    Provider(create: (_) => WorkListingRepository(apiClient)),
 
     /// Provider do ViewModel responsável pela listagem de trabalhos.
     ChangeNotifierProvider(
