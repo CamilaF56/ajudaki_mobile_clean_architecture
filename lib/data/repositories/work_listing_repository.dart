@@ -2,39 +2,43 @@ import '../../domain/work_listing.dart';
 import '../../utils/response.dart';
 import '../services/api/api_client.dart';
 
+/// Repositório responsável por obter os anúncios de trabalho.
 class WorkListingRepository {
+  /// Cria o repositório com o cliente de API utilizado nas requisições.
   WorkListingRepository();
 
-  List<WorkListing>? cache;
+  List<WorkListing>? _cache;
 
+  /// Retorna todos os anúncios de trabalho.
+  ///
+  /// Caso exista cache, os dados são retornados diretamente.
+  /// Caso contrário, a lista é buscada na API.
   Future<Response<List<WorkListing>>> getAll() async {
-    if (cache != null) {
-      return Future.value(Response(true, cache!));
-    }
+        if (_cache == null) {
+      final webResponse = await ApiClient.workListings.getAll();
 
-    final webResponse = await ApiClient.workListings.getAll();
-
-    if (webResponse.isSuccess) {
-      cache = webResponse.body?.values.toList();
-    }
-
-    return Response<List<WorkListing>>(
-      webResponse.isSuccess,
-      webResponse.body?.values.toList()
-    );
+      if (webResponse.isSuccess) {
+          _cache = webResponse.body?.values.toList();
+        }
+    };
+    
+    return Response(true, _cache!);
   }
 
+  /// Retorna os anúncios filtrados por categoria.
+  ///
+  /// Caso exista cache, o filtro é aplicado localmente.
   Future<Response<List<WorkListing>>> getByCategory(
     final int categoryId) async {
-      if (cache != null) {
-      final filtered = cache!
+      if (_cache != null) {
+      final filtered = _cache!
           .where(
             (final workListing) =>
                 workListing.workType?.workCategory?.id == categoryId,
           )
           .toList();
 
-      return Future.value(Response(true, filtered));
+      return Response(true, filtered);
     }
 
     final queryParameters = <String, String?>{};
@@ -47,26 +51,19 @@ class WorkListingRepository {
     );
   }
 
-  Future<Response<List<WorkListing>>> getByTerm(
-    final String terms) async {
-      if (cache != null) {
-      final filtered = cache!
-          .where(
-            (final workListing) =>
-                workListing.title.toLowerCase().contains(terms.toLowerCase()),
-          )
-          .toList();
-
-      return Future.value(Response(true, filtered));
-    }
-
+  /// Retorna os anúncios filtrados pelo termo de busca.
+  ///
+  /// A busca é realizada via API.
+  Future<Response<List<WorkListing>>> getByTerm(final String terms) async {
     final queryParameters = <String, String?>{};
     queryParameters['terms'] = terms;
+    final result = await ApiClient.workListings.search(queryParameters);
 
-    final webResponse = await ApiClient.workListings.search(queryParameters);
+    List<WorkListing>? list = null;
+    if (result.isSuccess) {
+      list = result.body?.values.toList();
+    };
 
-    return Response(
-      webResponse.isSuccess,
-      webResponse.body!.values.toList());
+    return Response(true, list);
   }
 }

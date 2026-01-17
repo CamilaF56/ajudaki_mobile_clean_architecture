@@ -4,13 +4,14 @@ import '../services/api/api_client.dart';
 
 /// Repositório responsável por obter as categorias de trabalho.
 class WorkCategoryRepository {
+  /// Cria o repositório com o cliente de API utilizado nas requisições.
   WorkCategoryRepository();
 
-  List<WorkCategory>? cache;
+  List<WorkCategory>? _cache;
 
   Future<Response<List<WorkCategory>>> getAll() async {
-  if (cache != null) {
-      return Response(true, cache);
+  if (_cache != null) {
+      return Response(true, _cache);
     }
 
   final webResponse = await ApiClient.workCategories.getAll();
