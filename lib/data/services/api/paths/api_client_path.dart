@@ -1,12 +1,12 @@
 import '../../../../utils/web/web_result.dart';
 import '../api_client_operations.dart';
 
-class ApiClientPath<T> {
+abstract class ApiClientPath<T> {
   ApiClientPath(this.operations, this.resource, this.fromJson);
 
-  final ApiClientOperations operations;
   final String resource;
   final T Function(Map<String, dynamic> json) fromJson;
+  final ApiClientOperations<T> operations;
 
   Future<WebResult<Map<String, T>>> getAll({
     final Map<String, String>? queryParameters,

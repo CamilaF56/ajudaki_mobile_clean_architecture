@@ -24,7 +24,7 @@ class WorkListingRepository implements Repository<WorkListing> {
         _cache = webResponse.value?.values.toList();
       }
     }
-    
+
     return Result(true, _cache);
   }
 
