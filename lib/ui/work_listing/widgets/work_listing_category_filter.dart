@@ -8,12 +8,12 @@ import '../../../domain/work_category.dart';
 /// para filtrar os anúncios exibidos.
 class WorkListingCategoryFilter extends StatelessWidget {
   /// Cria o widget de filtros de área de atuação.
-  const WorkListingCategoryFilter({
-    required this.categories,
-    required this.selectedCategory,
-    required this.onCategoryChanged,
-    super.key,
-  });
+  const WorkListingCategoryFilter(
+    this.categories,
+    this.selectedCategory,
+    this.onCategoryChanged,
+    [Key? key]
+  ) : super(key: key);
 
   /// Lista de áreas de atuação disponíveis para seleção.
   final List<WorkCategory> categories;

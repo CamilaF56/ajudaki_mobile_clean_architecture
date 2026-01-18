@@ -13,7 +13,11 @@ class WorkListingTopBar extends StatelessWidget {
   ///
   /// Os callbacks [onMenuTap] e [onSearchTap] são opcionais e permitem
   /// customização, caso necessário.
-  const WorkListingTopBar({super.key, this.onMenuTap, this.onSearchTap});
+  const WorkListingTopBar(
+    [this.onSearchTap,
+    this.onMenuTap,
+    Key? key]
+  ) : super(key: key);
 
   /// Callback acionado ao tocar no botão de menu (home).
   final VoidCallback? onMenuTap;

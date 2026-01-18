@@ -12,7 +12,9 @@ import 'work_listing_top_bar.dart';
 /// consumindo o estado fornecido pelo [WorkListingViewModel].
 class WorkListingScreen extends StatefulWidget {
   /// Cria a tela de listagem de serviços.
-  const WorkListingScreen({super.key});
+  const WorkListingScreen(
+    [Key? key]
+    ) : super(key: key);
 
   @override
   State<WorkListingScreen> createState() => _WorkListingScreenState();
@@ -44,9 +46,9 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
             color: Color.fromRGBO(171, 186, 255, 1),
           ),
           WorkListingCategoryFilter(
-            categories: vm.categories,
-            selectedCategory: vm.selectedCategory,
-            onCategoryChanged: vm.filterByCategory,
+            vm.categories,
+            vm.selectedCategory,
+            vm.filterByCategory
           ),
           Expanded(child: _buildBody(vm)),
         ],
@@ -76,7 +78,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
       itemBuilder: (final context, final index) {
         final listing = vm.listings[index];
 
-        return WorkListingEntry(listing: listing);
+        return WorkListingEntry( listing);
       },
     );
   }

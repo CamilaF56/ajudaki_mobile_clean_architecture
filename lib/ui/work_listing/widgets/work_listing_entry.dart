@@ -8,7 +8,10 @@ import '../../../domain/work_listing.dart';
 /// tipo de serviço, descrição e valor estimado.
 class WorkListingEntry extends StatelessWidget {
   /// Cria o widget de exibição de um anúncio de trabalho.
-  const WorkListingEntry({required this.listing, super.key});
+  const WorkListingEntry(
+    this.listing,
+    [Key? key]
+  ) : super(key: key);
 
   /// Anúncio de trabalho a ser exibido.
   final WorkListing listing;
