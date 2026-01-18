@@ -8,7 +8,7 @@ class Repositories {
   T get<T>() {
     final repository = _repositories[T];
     if (repository == null) {
-      throw Exception('Repository for type $T not found');
+      throw Exception('Repositorio do tipo $T não encontrado');
     }
     return repository;
   }
