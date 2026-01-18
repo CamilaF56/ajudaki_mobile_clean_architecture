@@ -14,7 +14,7 @@ class ApiClientPath<T> {
     return operations.get<Map<String, T>>(
       resource,
       (final json) {
-        final map = json as Map<String, dynamic>;
+        final map = json;
         return map.map<String, T>(
           (final key, final value) => MapEntry(
             key,

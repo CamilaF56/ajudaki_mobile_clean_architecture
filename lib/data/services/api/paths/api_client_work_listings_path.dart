@@ -15,7 +15,7 @@ class ApiClientWorkListingsPath extends ApiClientPath<WorkListing> {
     return operations.get<Map<String, WorkListing>>(
       resource,
       (final json) {
-        final map = json as Map<String, dynamic>;
+        final map = json;
         return map.map(
           (final key, final value) => MapEntry(
             key,

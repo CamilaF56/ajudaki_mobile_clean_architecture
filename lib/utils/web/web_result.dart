@@ -1,6 +1,7 @@
 import '../json_converter.dart';
 import '../result.dart';
-import 'web_result_status_code.dart';
+import 'web_result_status.dart';
+import 'web_result_status_type.dart';
 
 /// Classe que representa uma resposta de uma API web.
 ///
@@ -11,12 +12,12 @@ class WebResult<T> extends Result<T> {
     final int numCode, [
     this.body,
     final T Function(Map<String, dynamic> json)? jsonConverter
-  ]) : statusCode = WebResultStatusCode(numCode),
+  ]) : status = WebResultStatus(numCode),
       super(
-          WebResultStatusCode(numCode).isSuccess,
-          fromJson(body, jsonConverter)
+        WebResultStatus(numCode).type != WebResultStatusType.success,
+        fromJson(body, jsonConverter)
       );
 
-  final WebResultStatusCode statusCode;
+  final WebResultStatus status;
   final String? body;
 }
