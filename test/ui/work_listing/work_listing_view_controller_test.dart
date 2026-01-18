@@ -1,10 +1,10 @@
 import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
-import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/view_models/work_listing_view_controller.dart';
+import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../../../../testing/fakes/repositories/fake_work_category_repository.dart';
-import '../../../../testing/fakes/repositories/fake_work_listing_repository.dart';
+import '../../../testing/fakes/repositories/fake_work_category_repository.dart';
+import '../../../testing/fakes/repositories/fake_work_listing_repository.dart';
 
 void main() {
   group('init', () {

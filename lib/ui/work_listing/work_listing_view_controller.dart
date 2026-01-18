@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
-import '../../../data/repositories/work_category_repository.dart';
-import '../../../data/repositories/work_listing_repository.dart';
-import '../../../domain/work_category.dart';
-import '../../../domain/work_listing.dart';
-import '../../../utils/command.dart';
+import '../../data/repositories/work_category_repository.dart';
+import '../../data/repositories/work_listing_repository.dart';
+import '../../domain/work_category.dart';
+import '../../domain/work_listing.dart';
+import '../../utils/command.dart';
 
 /// ViewModel responsável por gerenciar o estado da listagem de trabalhos.
 ///

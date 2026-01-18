@@ -6,7 +6,7 @@ import 'data/repositories/repositories.dart';
 import 'data/repositories/work_category_repository.dart';
 import 'data/repositories/work_listing_repository.dart';
 import 'data/services/api/api_client_config.dart';
-import 'ui/work_listing/view_models/work_listing_view_controller.dart';
+import 'ui/work_listing/work_listing_view_controller.dart';
 
 /// Conjunto de providers responsáveis por configurar o acesso remoto.
 ///

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../domain/work_category.dart';
-import '../view_models/work_listing_view_controller.dart';
+import '../work_listing_view_controller.dart';
 
 /// Widget responsável por exibir os filtros de área de atuação.
 ///
