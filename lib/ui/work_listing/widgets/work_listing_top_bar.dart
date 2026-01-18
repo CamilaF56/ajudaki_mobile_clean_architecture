@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../work_listing/view_models/work_listing_view_model.dart';
+import '../view_models/work_listing_view_controller.dart';
 
 /// Barra superior da tela de listagem de serviços.
 ///
@@ -13,21 +12,15 @@ class WorkListingTopBar extends StatelessWidget {
   ///
   /// Os callbacks [onMenuTap] e [onSearchTap] são opcionais e permitem
   /// customização, caso necessário.
-  const WorkListingTopBar(
-    [this.onSearchTap,
-    this.onMenuTap,
-    final Key? key]
+  WorkListingTopBar(
+    [final Key? key]
   ) : super(key: key);
 
-  /// Callback acionado ao tocar no botão de menu (home).
-  final VoidCallback? onMenuTap;
-
-  /// Callback acionado ao tocar no botão de busca.
-  final VoidCallback? onSearchTap;
+  bool isShowingTextBox = false;
 
   @override
   Widget build(final BuildContext context) {
-    final viewModel = context.watch<WorkListingViewModel>();
+    final vm = context.watch<WorkListingViewModel>();
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Container(
@@ -54,19 +47,20 @@ class WorkListingTopBar extends StatelessWidget {
               onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
 
-                if (viewModel.isSearching) {
-                  await viewModel.toggleSearch();
+                if (vm.searchTerm != null) {
+                  vm.searchTerm = '';
+                  isShowingTextBox = false;
+                  vm.reloadCommand.execute();
                 }
 
-                await viewModel.loadBackHome();
-                onMenuTap?.call();
+                await vm.reloadCommand.execute();
               },
             ),
           ),
 
           const SizedBox(width: 12),
 
-          if (viewModel.isSearching)
+          if (isShowingTextBox)
             Expanded(
               child: TextField(
                 autofocus: true,
@@ -74,8 +68,8 @@ class WorkListingTopBar extends StatelessWidget {
                   hintText: 'Buscar serviço...',
                   isDense: true,
                 ),
-                onChanged: (final value) => viewModel.searchTerm = value,
-                onSubmitted: viewModel.search,
+                onChanged: (value) => vm.searchTerm = value,
+                onSubmitted: (value) => vm.searchCommand.execute
               ),
             )
           else
@@ -103,28 +97,24 @@ class WorkListingTopBar extends StatelessWidget {
                 overlayColor: WidgetStateProperty.all(Colors.transparent),
               ),
               icon: Icon(
-                viewModel.isSearching ? Icons.close : Icons.search,
+                isShowingTextBox ? Icons.close : Icons.search,
                 size: 28,
               ),
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints(),
               onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
-                await viewModel.toggleSearch();
-                onSearchTap?.call();
+                isShowingTextBox = !isShowingTextBox;
+                if (isShowingTextBox) {
+                  vm.searchTerm = '';
+                  isShowingTextBox = false;
+                  await vm.reloadCommand.execute();
+                }
               },
             ),
           ),
         ],
       ),
     );
-  }
-
-  @override
-  void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(ObjectFlagProperty<VoidCallback?>.has('onMenuTap', onMenuTap))
-      ..add(ObjectFlagProperty<VoidCallback?>.has('onSearchTap', onSearchTap));
   }
 }

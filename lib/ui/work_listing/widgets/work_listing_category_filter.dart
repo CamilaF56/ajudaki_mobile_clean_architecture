@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../domain/work_category.dart';
+import '../view_models/work_listing_view_controller.dart';
 
 /// Widget responsável por exibir os filtros de área de atuação.
 ///
@@ -9,32 +11,25 @@ import '../../../domain/work_category.dart';
 class WorkListingCategoryFilter extends StatelessWidget {
   /// Cria o widget de filtros de área de atuação.
   const WorkListingCategoryFilter(
-    this.categories,
-    this.selectedCategory,
-    this.onCategoryChanged,
+    this.options,
     [final Key? key]
   ) : super(key: key);
 
-  /// Lista de áreas de atuação disponíveis para seleção.
-  final List<WorkCategory> categories;
-
-  /// Área de atuação atualmente selecionada.
-  final WorkCategory? selectedCategory;
-
-  /// Callback acionado quando a categoria selecionada é alterada.
-  final ValueChanged<WorkCategory?> onCategoryChanged;
+  final List<WorkCategory> options;
 
   @override
   Widget build(final BuildContext context) {
+    final vm = context.watch<WorkListingViewModel>();
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Row(
         children: [
           Expanded(
             child: DropdownButtonFormField<WorkCategory>(
-              initialValue: selectedCategory,
+              initialValue: vm.filterCategory,
               hint: const Text('Selecione a categoria do serviço'),
-              items: categories
+              items: options
                   .map(
                     (final category) => DropdownMenuItem(
                       value: category,
@@ -42,9 +37,12 @@ class WorkListingCategoryFilter extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged: onCategoryChanged,
-              decoration: const InputDecoration(
-                focusedBorder: UnderlineInputBorder(
+                  onChanged: (category) => {
+                    vm.filterCategory = category,
+                    vm.filterByCategoryCommand.execute()
+                  },
+                  decoration: const InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Color.fromRGBO(171, 186, 255, 1),
                   ),
@@ -61,15 +59,6 @@ class WorkListingCategoryFilter extends StatelessWidget {
   void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty<List<WorkCategory>>('categories', categories))
-      ..add(
-        DiagnosticsProperty<WorkCategory>('selectedCategory', selectedCategory),
-      )
-      ..add(
-        ObjectFlagProperty<ValueChanged<WorkCategory>?>.has(
-          'onCategoryChanged',
-          onCategoryChanged,
-        ),
-      );
+      ..add(DiagnosticsProperty<List<WorkCategory>>('options', options));
   }
 }

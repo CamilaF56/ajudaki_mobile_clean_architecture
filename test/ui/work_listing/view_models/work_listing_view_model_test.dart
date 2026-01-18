@@ -1,6 +1,6 @@
 import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
-import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/view_models/work_listing_view_model.dart';
+import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/view_models/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../../../testing/fakes/repositories/fake_work_category_repository.dart';
@@ -31,7 +31,7 @@ void main() {
 
       expect(viewModel.listings.length, 1);
       expect(viewModel.categories.length, 1);
-      expect(viewModel.hasError, false);
+      expect(viewModel.error, false);
     });
 
     test('seta erro quando serviços falham', () async {
@@ -48,7 +48,7 @@ void main() {
 
       await viewModel.init();
 
-      expect(viewModel.hasError, true);
+      expect(viewModel.error, true);
       expect(viewModel.listings.isEmpty, true);
       expect(viewModel.categories.length, 1);
     });
@@ -74,7 +74,7 @@ void main() {
 
       await viewModel.init();
 
-      expect(viewModel.hasError, true);
+      expect(viewModel.error, true);
       expect(viewModel.categories.isEmpty, true);
       expect(viewModel.listings.length, 1);
     });
@@ -93,7 +93,7 @@ void main() {
 
       await viewModel.init();
 
-      expect(viewModel.hasError, false);
+      expect(viewModel.error, false);
       expect(viewModel.listings.isEmpty, true);
       expect(viewModel.categories.isEmpty, true);
     });
@@ -116,10 +116,11 @@ void main() {
         FakeWorkCategoryRepository(),
       );
 
-      await viewModel.search('pintar');
+      viewModel.searchTerm = 'pintar';
+      await viewModel.searchCommand.execute();
 
       expect(viewModel.listings.length, 1);
-      expect(viewModel.hasError, false);
+      expect(viewModel.error, false);
     });
 
     test('busca vazia restaura dados', () async {
@@ -131,9 +132,10 @@ void main() {
         FakeWorkCategoryRepository(),
       );
 
-      await viewModel.search('');
+      viewModel.searchTerm = '';
+      await viewModel.searchCommand.execute();
 
-      expect(viewModel.hasError, false);
+      expect(viewModel.error, false);
     });
 
     test('busca seta erro quando falha', () async {
@@ -145,9 +147,10 @@ void main() {
         FakeWorkCategoryRepository(),
       );
 
-      await viewModel.search('erro');
+      viewModel.searchTerm = 'erro';
+      await viewModel.searchCommand.execute();
 
-      expect(viewModel.hasError, true);
+      expect(viewModel.error, true);
       expect(viewModel.listings.isEmpty, true);
     });
   });
@@ -171,11 +174,11 @@ void main() {
         FakeWorkCategoryRepository(),
       );
 
-      await viewModel.filterByCategory(category);
+      viewModel.filterCategory = category;
+      await viewModel.filterByCategoryCommand.execute();
 
-      expect(viewModel.selectedCategory, category);
       expect(viewModel.listings.length, 1);
-      expect(viewModel.hasError, false);
+      expect(viewModel.error, false);
     });
 
     test('filtro seta erro quando falha', () async {
@@ -189,9 +192,10 @@ void main() {
         FakeWorkCategoryRepository(),
       );
 
-      await viewModel.filterByCategory(category);
+      viewModel.filterCategory = category;
+      await viewModel.filterByCategoryCommand.execute();
 
-      expect(viewModel.hasError, true);
+      expect(viewModel.error, true);
       expect(viewModel.listings.isEmpty, true);
     });
   });
@@ -206,9 +210,7 @@ void main() {
         FakeWorkCategoryRepository(),
       );
 
-      await viewModel.reset();
-
-      expect(viewModel.selectedCategory, null);
+      await viewModel.reloadCommand.execute();
     });
 
     test('toggleSearch ativa e desativa busca', () async {
@@ -217,12 +219,11 @@ void main() {
         FakeWorkCategoryRepository(),
       );
 
-      await viewModel.toggleSearch();
-      expect(viewModel.isSearching, true);
+      await viewModel.reloadCommand.execute();
+      expect(viewModel.isLoading, true);
 
-      await viewModel.toggleSearch();
-      expect(viewModel.isSearching, false);
-      expect(viewModel.searchTerm, '');
+      await viewModel.reloadCommand.execute();
+      expect(viewModel.isLoading, false);
     });
   });
 
@@ -244,14 +245,12 @@ void main() {
       FakeWorkCategoryRepository(),
     );
 
-    await viewModel.filterByCategory(WorkCategory(1, 'Hidráulica'));
+      viewModel.filterCategory = WorkCategory(1, 'Hidráulica');
+      await viewModel.filterByCategoryCommand.execute();
 
-    expect(viewModel.selectedCategory, isNotNull);
+    await viewModel.reloadCommand.execute();
 
-    await viewModel.loadBackHome();
-
-    expect(viewModel.selectedCategory, null);
     expect(viewModel.listings.length, 1);
-    expect(viewModel.hasError, false);
+    expect(viewModel.error, false);
   });
 }

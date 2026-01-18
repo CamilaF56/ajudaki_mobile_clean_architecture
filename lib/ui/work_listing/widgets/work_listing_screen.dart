@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../view_models/work_listing_view_model.dart';
+import '../view_models/work_listing_view_controller.dart';
 import 'work_listing_category_filter.dart';
 import 'work_listing_entry.dart';
 import 'work_listing_top_bar.dart';
@@ -16,6 +16,7 @@ class WorkListingScreen extends StatefulWidget {
     [final Key? key]
     ) : super(key: key);
 
+
   @override
   State<WorkListingScreen> createState() => _WorkListingScreenState();
 }
@@ -25,7 +26,6 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
   void initState() {
     super.initState();
 
-    /// Carrega os dados depois que a tela aparece.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       unawaited(context.read<WorkListingViewModel>().init());
     });
@@ -39,17 +39,13 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
       backgroundColor: const Color.fromRGBO(235, 236, 237, 1),
       body: Column(
         children: [
-          const WorkListingTopBar(),
+          WorkListingTopBar(),
           const Divider(
             height: 1,
             thickness: 2,
             color: Color.fromRGBO(171, 186, 255, 1),
           ),
-          WorkListingCategoryFilter(
-            vm.categories,
-            vm.selectedCategory,
-            vm.filterByCategory
-          ),
+          WorkListingCategoryFilter(vm.categories),
           Expanded(child: _buildBody(vm)),
         ],
       ),
@@ -65,7 +61,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    if (vm.hasError) {
+    if (vm.error != null) {
       return const Center(child: Text('Erro ao carregar os serviços'));
     }
 
