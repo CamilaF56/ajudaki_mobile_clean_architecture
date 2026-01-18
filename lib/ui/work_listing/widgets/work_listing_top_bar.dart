@@ -7,7 +7,10 @@ import '../view_models/work_listing_view_controller.dart';
 /// Responsável por exibir o logotipo da aplicação ou o campo de busca,
 /// além de fornecer ações de navegação para retorno à tela inicial
 /// e ativação/desativação do modo de pesquisa.
-class WorkListingTopBar extends StatelessWidget {
+class WorkListingTopBar extends StatefulWidget  {
+    @override
+  _WorkListingTopBarState createState() => _WorkListingTopBarState();
+
   /// Cria a barra superior da listagem de serviços.
   ///
   /// Os callbacks [onMenuTap] e [onSearchTap] são opcionais e permitem
@@ -15,7 +18,9 @@ class WorkListingTopBar extends StatelessWidget {
   WorkListingTopBar(
     [final Key? key]
   ) : super(key: key);
+}
 
+class _WorkListingTopBarState extends State<WorkListingTopBar> {
   bool isShowingTextBox = false;
 
   @override
@@ -69,7 +74,7 @@ class WorkListingTopBar extends StatelessWidget {
                   isDense: true,
                 ),
                 onChanged: (value) => vm.searchTerm = value,
-                onSubmitted: (value) => vm.searchCommand.execute
+                onSubmitted: (value) => vm.searchCommand.execute()
               ),
             )
           else
@@ -104,12 +109,18 @@ class WorkListingTopBar extends StatelessWidget {
               constraints: const BoxConstraints(),
               onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
-                isShowingTextBox = !isShowingTextBox;
-                if (isShowingTextBox) {
-                  vm.searchTerm = '';
-                  isShowingTextBox = false;
-                  await vm.reloadCommand.execute();
-                }
+                setState(() {
+                  if (isShowingTextBox) {
+                    // Clear the search term and hide the text box when closing
+                    vm.searchTerm = '';
+                    vm.reloadCommand.execute();
+                    isShowingTextBox = false;
+                  } else {
+                    // Show the text box when opening
+                    vm.searchTerm = '';
+                    isShowingTextBox = true;
+                  }
+                });
               },
             ),
           ),

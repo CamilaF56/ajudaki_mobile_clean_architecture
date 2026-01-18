@@ -62,7 +62,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
     }
 
     if (vm.error != null) {
-      return const Center(child: Text('Erro ao carregar os serviços'));
+      return Center(child: Text('Erro ${vm.error}'));
     }
 
     if (vm.listings.isEmpty) {

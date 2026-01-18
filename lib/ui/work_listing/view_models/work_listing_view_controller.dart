@@ -78,6 +78,8 @@ class WorkListingViewModel extends ChangeNotifier {
   Future<void> _reload() async {
     error = null;
     isLoading = true;
+    searchTerm = null;
+    filterCategory = null;
     notifyListeners();
 
     final response = await _workListingRepository.getAll();

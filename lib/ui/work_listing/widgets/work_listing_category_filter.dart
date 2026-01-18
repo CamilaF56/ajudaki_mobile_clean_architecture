@@ -37,9 +37,13 @@ class WorkListingCategoryFilter extends StatelessWidget {
                     ),
                   )
                   .toList(),
-                  onChanged: (category) => {
-                    vm.filterCategory = category,
-                    vm.filterByCategoryCommand.execute()
+                  onChanged: (category) {
+                    if (vm.filterCategory == category) {
+                      vm.reloadCommand.execute();
+                    } else {
+                      vm.filterCategory = category;
+                      vm.filterByCategoryCommand.execute();
+                    }
                   },
                   decoration: const InputDecoration(
                   focusedBorder: UnderlineInputBorder(
