@@ -1,9 +1,10 @@
 import '../../domain/work_listing.dart';
 import '../../utils/result.dart';
 import '../services/api/paths/api_client_work_listings_path.dart';
+import 'repository.dart';
 
 /// Repositório responsável por obter os anúncios de trabalho.
-class WorkListingRepository {
+class WorkListingRepository implements Repository<WorkListing> {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
   WorkListingRepository(this._apiPath);
 
@@ -14,6 +15,7 @@ class WorkListingRepository {
   ///
   /// Caso exista cache, os dados são retornados diretamente.
   /// Caso contrário, a lista é buscada na API.
+  @override
   Future<Result<List<WorkListing>>> getAll() async {
     if (_cache == null) {
       final webResponse = await _apiPath.getAll();
