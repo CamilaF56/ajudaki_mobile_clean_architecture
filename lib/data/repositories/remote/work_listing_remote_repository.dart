@@ -6,7 +6,8 @@ import '../work_listing_repository.dart';
 /// Repositório responsável por obter os anúncios de trabalho.
 class WorkListingRemoteRepository implements WorkListingRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
-  WorkListingRemoteRepository(this._apiPath);
+  WorkListingRemoteRepository(apiClientConfig)
+  : _apiPath = ApiClientWorkListingsPath(apiClientConfig);
 
   final ApiClientWorkListingsPath _apiPath;
   List<WorkListing>? _cache;
