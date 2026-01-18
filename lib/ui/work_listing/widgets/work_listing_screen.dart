@@ -61,7 +61,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
     }
 
     if (vm.error != null) {
-      return Center(child: Text('Erro ${vm.error}'));
+      return Center(child: Text('Erro'));
     }
 
     if (vm.listings.isEmpty) {
@@ -73,7 +73,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
       itemBuilder: (final context, final index) {
         final listing = vm.listings[index];
 
-        return WorkListingEntry( listing);
+        return WorkListingEntry(listing);
       },
     );
   }

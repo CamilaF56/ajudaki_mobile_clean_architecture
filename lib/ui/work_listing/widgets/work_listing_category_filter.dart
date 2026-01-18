@@ -62,6 +62,7 @@ class WorkListingCategoryFilter extends StatelessWidget {
   @override
   void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<List<WorkCategory>>('options', options));
+    properties.add(DiagnosticsProperty<List<WorkCategory>>(
+      'options', options));
   }
 }

@@ -52,11 +52,13 @@ class WorkListingTopBarState extends State<WorkListingTopBar> {
 
                 if (vm.searchTerm != null) {
                   vm.searchTerm = '';
-                  isShowingTextBox = false;
+                  setState(() {
+                    isShowingTextBox = false;
+                  });
+                  await vm.reloadCommand.execute();
+                } else {
                   await vm.reloadCommand.execute();
                 }
-
-                await vm.reloadCommand.execute();
               },
             ),
           ),
@@ -107,17 +109,22 @@ class WorkListingTopBarState extends State<WorkListingTopBar> {
               constraints: const BoxConstraints(),
               onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
-                setState(() async {
-                  if (isShowingTextBox) {
-                    vm.searchTerm = '';
-                    await vm.reloadCommand.execute();
+
+                if (isShowingTextBox) {
+                  vm.searchTerm = '';
+                  await vm.reloadCommand.execute();
+
+                  setState(() {
                     isShowingTextBox = false;
-                  } else {
-                    vm.searchTerm = '';
+                  });
+                } else {
+                  vm.searchTerm = '';
+
+                  setState(() {
                     isShowingTextBox = true;
-                  }
-                });
-              },
+                  });
+                }
+              }
             ),
           ),
         ],

@@ -6,7 +6,6 @@ class FakeWorkListingRepository implements WorkListingRepository {
   FakeWorkListingRepository();
 
   Result<List<WorkListing>>? response;
-  Result<List<WorkListing>>? filterResponse;
 
   @override
   Future<Result<List<WorkListing>>> getAll() async {
@@ -15,11 +14,11 @@ class FakeWorkListingRepository implements WorkListingRepository {
 
   @override
   Future<Result<List<WorkListing>>> getByCategory(int categoryId) async {
-    return filterResponse ?? Result(true, []);
+    return response ?? Result(true, []);
   }
 
   @override
   Future<Result<List<WorkListing>>> getByTerm(String term) async {
-    return filterResponse ?? Result(true, []);
+    return response ?? Result(true, []);
   }
 }

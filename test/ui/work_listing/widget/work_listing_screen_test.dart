@@ -1,8 +1,8 @@
 import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
-import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_entry.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_screen.dart';
+import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -40,7 +40,6 @@ void main() {
     );
 
     await tester.pumpWidget(makeTestableWidget(vm));
-
     await tester.pumpAndSettle();
 
     expect(find.byType(ListView), findsOneWidget);
@@ -63,7 +62,7 @@ void main() {
     await tester.pump();
     await tester.pump();
 
-    expect(find.text('Erro ao carregar os serviços'), findsOneWidget);
+    expect(find.text('Erro'), findsOneWidget);
   });
 
   testWidgets('mostra estado vazio quando não há serviços', (

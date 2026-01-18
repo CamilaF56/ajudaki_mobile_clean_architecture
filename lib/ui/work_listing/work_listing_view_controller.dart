@@ -23,6 +23,13 @@ class WorkListingViewModel extends ChangeNotifier {
   final WorkListingRepository _workListingRepository;
   final WorkCategoryRepository _workCategoryRepository;
 
+  late final Command loadCategoriesCommand;
+  late final Command loadListingsCommand;
+
+  late final Command reloadCommand;
+  late final Command searchCommand;
+  late final Command filterByCategoryCommand;
+
   bool isInitialized = false;
 
   bool isLoading = false;
@@ -43,13 +50,6 @@ class WorkListingViewModel extends ChangeNotifier {
     await loadListingsCommand.execute();
   }
 
-  late final Command loadCategoriesCommand;
-  late final Command loadListingsCommand;
-
-  late final Command reloadCommand;
-  late final Command searchCommand;
-  late final Command filterByCategoryCommand;
-
   Future<void> _loadListings() async {
     notifyListeners();
 
@@ -57,6 +57,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     if (result.isSuccess) {
       listings = result.value!;
+    } else {
+      error = 'Erro de serviços';
     }
 
     isLoading = false;
@@ -70,6 +72,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     if (result.isSuccess) {
       categories = result.value!;
+    } else {
+      error = 'Erro de categorias';
     }
 
     notifyListeners();
@@ -110,6 +114,7 @@ class WorkListingViewModel extends ChangeNotifier {
       listings = response.value!;
     } else {
       listings = [];
+      error = 'Erro de busca';
     }
 
     notifyListeners();
@@ -130,6 +135,7 @@ class WorkListingViewModel extends ChangeNotifier {
       listings = response.value!;
     } else {
       listings = [];
+      error = 'Erro de filtro';
     }
 
     notifyListeners();

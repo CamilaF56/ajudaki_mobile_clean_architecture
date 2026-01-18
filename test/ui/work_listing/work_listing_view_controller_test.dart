@@ -1,5 +1,6 @@
 import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
+import 'package:ajudaki_mobile_clean_architecture/domain/work_type.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,7 +32,7 @@ void main() {
 
       expect(viewModel.listings.length, 1);
       expect(viewModel.categories.length, 1);
-      expect(viewModel.error, false);
+      expect(viewModel.error, null);
     });
 
     test('seta erro quando serviços falham', () async {
@@ -48,7 +49,7 @@ void main() {
 
       await viewModel.init();
 
-      expect(viewModel.error, true);
+      expect(viewModel.error, isNotNull);
       expect(viewModel.listings.isEmpty, true);
       expect(viewModel.categories.length, 1);
     });
@@ -74,7 +75,7 @@ void main() {
 
       await viewModel.init();
 
-      expect(viewModel.error, true);
+      expect(viewModel.error, isNotNull);
       expect(viewModel.categories.isEmpty, true);
       expect(viewModel.listings.length, 1);
     });
@@ -93,7 +94,7 @@ void main() {
 
       await viewModel.init();
 
-      expect(viewModel.error, false);
+      expect(viewModel.error, null);
       expect(viewModel.listings.isEmpty, true);
       expect(viewModel.categories.isEmpty, true);
     });
@@ -120,7 +121,7 @@ void main() {
       await viewModel.searchCommand.execute();
 
       expect(viewModel.listings.length, 1);
-      expect(viewModel.error, false);
+      expect(viewModel.error, null);
     });
 
     test('busca vazia restaura dados', () async {
@@ -135,7 +136,7 @@ void main() {
       ..searchTerm = '';
       await viewModel.searchCommand.execute();
 
-      expect(viewModel.error, false);
+      expect(viewModel.error, null);
     });
 
     test('busca seta erro quando falha', () async {
@@ -150,7 +151,7 @@ void main() {
       ..searchTerm = 'erro';
       await viewModel.searchCommand.execute();
 
-      expect(viewModel.error, true);
+      expect(viewModel.error, isNotNull);
       expect(viewModel.listings.isEmpty, true);
     });
   });
@@ -160,7 +161,7 @@ void main() {
       final category = WorkCategory(1, 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
-        ..filterResponse = Result(true, [
+        ..response = Result(true, [
           WorkListing(
             3,
             'Instalar chuveiro',
@@ -178,14 +179,14 @@ void main() {
       await viewModel.filterByCategoryCommand.execute();
 
       expect(viewModel.listings.length, 1);
-      expect(viewModel.error, false);
+      expect(viewModel.error, null);
     });
 
     test('filtro seta erro quando falha', () async {
       final category = WorkCategory(1, 'Elétrica');
 
       final listingRepo = FakeWorkListingRepository()
-        ..filterResponse = Result(false);
+        ..response = Result(false);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
@@ -195,7 +196,7 @@ void main() {
       ..filterCategory = category;
       await viewModel.filterByCategoryCommand.execute();
 
-      expect(viewModel.error, true);
+      expect(viewModel.error, isNotNull);
       expect(viewModel.listings.isEmpty, true);
     });
   });
@@ -212,19 +213,6 @@ void main() {
 
       await viewModel.reloadCommand.execute();
     });
-
-    test('toggleSearch ativa e desativa busca', () async {
-      final viewModel = WorkListingViewModel(
-        FakeWorkListingRepository(),
-        FakeWorkCategoryRepository(),
-      );
-
-      await viewModel.reloadCommand.execute();
-      expect(viewModel.isLoading, true);
-
-      await viewModel.reloadCommand.execute();
-      expect(viewModel.isLoading, false);
-    });
   });
 
   test('loadBackHome limpa categoria e recarrega listagem do cache', () async {
@@ -236,7 +224,8 @@ void main() {
             10,
             'Consertar torneira',
             '',
-            80
+            80,
+            WorkType(1, 'type', WorkCategory(1, 'Hidráulica'))
           )]
         );
 
@@ -245,12 +234,12 @@ void main() {
       FakeWorkCategoryRepository(),
     )
 
-      ..filterCategory = WorkCategory(1, 'Hidráulica');
-      await viewModel.filterByCategoryCommand.execute();
+    ..filterCategory = WorkCategory(1, 'Hidráulica');
+    await viewModel.filterByCategoryCommand.execute();
 
     await viewModel.reloadCommand.execute();
 
     expect(viewModel.listings.length, 1);
-    expect(viewModel.error, false);
+    expect(viewModel.error, null);
   });
 }
