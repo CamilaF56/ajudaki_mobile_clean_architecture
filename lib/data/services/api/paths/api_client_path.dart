@@ -1,20 +1,22 @@
+import 'package:ajudaki_mobile_clean_architecture/data/services/api/api_client_config.dart';
 import '../../../../utils/web/web_result.dart';
 import '../api_client_operations.dart';
 
 abstract class ApiClientPath<T> {
   ApiClientPath(
-    this.operations,
+    this.apiClientConfig,
     this.resource,
     this.fromJson);
 
-  final ApiClientOperations operations;
+  final ApiClientConfig apiClientConfig;
   final String resource;
   final T Function(Map<String, dynamic> json) fromJson;
 
   Future<WebResult<Map<String, T>>> getAll({
     final Map<String, String>? queryParameters,
   }) async {
-    return operations.get<Map<String, T>>(
+    return ApiClientOperations.get<Map<String, T>>(
+      apiClientConfig,
       resource,
       (final json) {
         final map = json;
