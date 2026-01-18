@@ -9,7 +9,7 @@ import '../../../../testing/fakes/repositories/fake_work_listing_repository.dart
 void main() {
   group('init', () {
     test('carrega categorias e serviços', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, [
           WorkListing(
             1,
@@ -19,7 +19,7 @@ void main() {
           )
         ]);
 
-      final categoryRepo = FakeWorkCategoryRepository(null)
+      final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
@@ -35,10 +35,10 @@ void main() {
     });
 
     test('seta erro quando serviços falham', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
 
-      final categoryRepo = FakeWorkCategoryRepository(null)
+      final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
       final viewModel = WorkListingViewModel(
@@ -54,7 +54,7 @@ void main() {
     });
 
     test('seta erro quando categorias falham', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, [
           WorkListing(
             1,
@@ -64,7 +64,7 @@ void main() {
           )
         ]);
 
-      final categoryRepo = FakeWorkCategoryRepository(null)
+      final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(false);
 
       final viewModel = WorkListingViewModel(
@@ -80,10 +80,10 @@ void main() {
     });
 
     test('aceita listas vazias sem erro', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
 
-      final categoryRepo = FakeWorkCategoryRepository(null)
+      final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, []);
 
       final viewModel = WorkListingViewModel(
@@ -101,7 +101,7 @@ void main() {
 
   group('search', () {
     test('busca serviços com termo', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, [
           WorkListing(
             2,
@@ -113,7 +113,7 @@ void main() {
 
       final viewModel = WorkListingViewModel(
         listingRepo,
-        FakeWorkCategoryRepository(null),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.search('pintar');
@@ -123,12 +123,12 @@ void main() {
     });
 
     test('busca vazia restaura dados', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
-        FakeWorkCategoryRepository(null),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.search('');
@@ -137,12 +137,12 @@ void main() {
     });
 
     test('busca seta erro quando falha', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
-        FakeWorkCategoryRepository(null),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.search('erro');
@@ -156,7 +156,7 @@ void main() {
     test('filtra serviços por categoria', () async {
       final category = WorkCategory(1, 'Elétrica');
 
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..filterResponse = Result(true, [
           WorkListing(
             3,
@@ -168,7 +168,7 @@ void main() {
 
       final viewModel = WorkListingViewModel(
         listingRepo,
-        FakeWorkCategoryRepository(null),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.filterByCategory(category);
@@ -181,12 +181,12 @@ void main() {
     test('filtro seta erro quando falha', () async {
       final category = WorkCategory(1, 'Elétrica');
 
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..filterResponse = Result(false);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
-        FakeWorkCategoryRepository(null),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.filterByCategory(category);
@@ -198,12 +198,12 @@ void main() {
 
   group('reset & toggleSearch', () {
     test('reset limpa categoria selecionada', () async {
-      final listingRepo = FakeWorkListingRepository(null)
+      final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
 
       final viewModel = WorkListingViewModel(
         listingRepo,
-        FakeWorkCategoryRepository(null),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.reset();
@@ -213,8 +213,8 @@ void main() {
 
     test('toggleSearch ativa e desativa busca', () async {
       final viewModel = WorkListingViewModel(
-        FakeWorkListingRepository(null),
-        FakeWorkCategoryRepository(null),
+        FakeWorkListingRepository(),
+        FakeWorkCategoryRepository(),
       );
 
       await viewModel.toggleSearch();
@@ -227,7 +227,7 @@ void main() {
   });
 
   test('loadBackHome limpa categoria e recarrega listagem do cache', () async {
-    final listingRepo = FakeWorkListingRepository(null)
+    final listingRepo = FakeWorkListingRepository()
       ..response = Result(
         true,
         [
@@ -241,7 +241,7 @@ void main() {
 
     final viewModel = WorkListingViewModel(
       listingRepo,
-      FakeWorkCategoryRepository(null),
+      FakeWorkCategoryRepository(),
     );
 
     await viewModel.filterByCategory(WorkCategory(1, 'Hidráulica'));

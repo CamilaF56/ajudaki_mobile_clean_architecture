@@ -5,13 +5,21 @@ import 'api_client_path.dart';
 
 class ApiClientWorkListingsPath extends ApiClientPath<WorkListing> {
   ApiClientWorkListingsPath(final apiClientConfig)
-      : super(
-          apiClientConfig,
-          'worklistings',
-          WorkListing.fromJson);
+    : super(
+    apiClientConfig,
+    'worklistings',
+    WorkListing.fromJson);
 
-  Future<WebResult<Map<String, WorkListing>>> search(
-    final Map<String, String?> queryParameters ) async {
+  static const String workCategoryId = 'workCategoryId';
+  static const String terms = 'terms';
+
+  Future<WebResult<Map<String, WorkListing>>> search({
+    String? workCategoryId,
+    String? terms}) async {
+    final queryParameters = <String, String?>{};
+    queryParameters['workCategoryId'] = workCategoryId;
+    queryParameters['terms'] = terms;
+
     return ApiClientOperations.get<Map<String, WorkListing>>(
       apiClientConfig,
       resource,

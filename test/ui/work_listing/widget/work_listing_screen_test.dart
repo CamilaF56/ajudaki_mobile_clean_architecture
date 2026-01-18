@@ -21,7 +21,7 @@ void main() {
   }
 
   testWidgets('mostra lista de serviços quando sucesso', (final tester) async {
-    final listingRepo = FakeWorkListingRepository(null)
+    final listingRepo = FakeWorkListingRepository()
       ..response = Result(true,[
         WorkListing(
           1,
@@ -31,7 +31,7 @@ void main() {
         ),
       ]);
 
-    final categoryRepo = FakeWorkCategoryRepository(null)
+    final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
     final vm = WorkListingViewModel(
@@ -48,10 +48,10 @@ void main() {
   });
 
   testWidgets('mostra mensagem de erro quando falha', (final tester) async {
-    final listingRepo = FakeWorkListingRepository(null)
+    final listingRepo = FakeWorkListingRepository()
       ..response = Result(false);
 
-    final categoryRepo = FakeWorkCategoryRepository(null)
+    final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, []);
 
     final vm = WorkListingViewModel(
@@ -69,10 +69,10 @@ void main() {
   testWidgets('mostra estado vazio quando não há serviços', (
     final tester,
   ) async {
-    final listingRepo = FakeWorkListingRepository(null)
+    final listingRepo = FakeWorkListingRepository()
       ..response = Result(true, []);
 
-    final categoryRepo = FakeWorkCategoryRepository(null)
+    final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, []);
 
     final vm = WorkListingViewModel(

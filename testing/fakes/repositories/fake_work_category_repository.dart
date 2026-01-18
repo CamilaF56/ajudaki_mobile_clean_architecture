@@ -2,8 +2,8 @@ import 'package:ajudaki_mobile_clean_architecture/data/repositories/work_categor
 import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 
-class FakeWorkCategoryRepository extends WorkCategoryRepository {
-  FakeWorkCategoryRepository(_apiPath) : super(_apiPath);
+class FakeWorkCategoryRepository implements WorkCategoryRepository {
+  FakeWorkCategoryRepository();
 
   Result<List<WorkCategory>>? response;
 

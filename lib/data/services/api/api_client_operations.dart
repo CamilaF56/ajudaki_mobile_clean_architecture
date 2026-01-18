@@ -18,13 +18,13 @@ class ApiClientOperations {
     try {
       final response = await http.get(uri);
 
-      return WebResult<T>(
+      return WebResult<T>.withJson(
         response.statusCode,
         response.body,
         fromJson
       );
     } on Exception catch (e) {
-      return WebResult<T>(
+      return WebResult<T>.withJson(
         -1,
         e.toString()
       );
