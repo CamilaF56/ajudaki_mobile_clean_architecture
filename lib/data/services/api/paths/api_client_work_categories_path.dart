@@ -2,9 +2,9 @@ import '../../../../domain/work_category.dart';
 import 'api_client_path.dart';
 
 class ApiClientWorkCategoriesPath extends ApiClientPath<WorkCategory> {
-  ApiClientWorkCategoriesPath(final operations)
+  ApiClientWorkCategoriesPath(final apiClientConfig)
   : super(
-      operations,
+      apiClientConfig,
       'workcategories',
       WorkCategory.fromJson);
 }
