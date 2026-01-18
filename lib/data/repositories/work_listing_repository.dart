@@ -33,11 +33,10 @@ class WorkListingRepository {
     final int categoryId) async {
       if (_cache != null) {
       final filtered = _cache!
-          .where(
-            (final workListing) =>
-                workListing.workType?.workCategory?.id == categoryId,
-          )
-          .toList();
+        .where(
+          (final workListing) =>
+            workListing.workType?.workCategory?.id == categoryId
+        ).toList();
 
       return Result(true, filtered);
     }

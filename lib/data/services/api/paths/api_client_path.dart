@@ -14,14 +14,14 @@ class ApiClientPath<T> {
     return operations.get<Map<String, T>>(
       resource,
       (final json) {
-      final map = json as Map<String, dynamic>;
-      return map.map<String, T>(
-        (final key, final value) => MapEntry(
-          key,
-          fromJson(value as Map<String, dynamic>),
-        ),
-      );
-    },
+        final map = json as Map<String, dynamic>;
+        return map.map<String, T>(
+          (final key, final value) => MapEntry(
+            key,
+            fromJson(value as Map<String, dynamic>),
+          ),
+        );
+      },
       queryParameters: queryParameters,
     );
   }

@@ -5,7 +5,7 @@ import 'api_client_operations.dart';
 /// Cliente responsável pela comunicação HTTP com a API backend.
 class ApiClient {
   ApiClient(final config) {
-    ApiClientOperations operations = ApiClientOperations(config);
+    final operations = ApiClientOperations(config);
     workCategories = ApiClientWorkCategoriesPath(operations);
     workListings = ApiClientWorkListingsPath(operations);
   }

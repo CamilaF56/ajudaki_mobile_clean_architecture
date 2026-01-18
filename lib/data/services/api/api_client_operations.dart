@@ -9,7 +9,7 @@ class ApiClientOperations {
 
   Future<WebResult<T>> get<T>(
     final String path,
-    final T Function(dynamic json) fromJson, {
+    final T Function(Map<String, dynamic> json) fromJson, {
     final Map<String, String?>? queryParameters
   }) async {
     final uri = Uri.http(
