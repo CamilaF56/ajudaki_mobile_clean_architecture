@@ -6,9 +6,9 @@ import '../../../domain/work_category.dart';
 ///
 /// Permite ao usuário selecionar uma área de atuação
 /// para filtrar os anúncios exibidos.
-class WorkListingFilters extends StatelessWidget {
+class WorkListingCategoryFilter extends StatelessWidget {
   /// Cria o widget de filtros de área de atuação.
-  const WorkListingFilters({
+  const WorkListingCategoryFilter({
     required this.categories,
     required this.selectedCategory,
     required this.onCategoryChanged,

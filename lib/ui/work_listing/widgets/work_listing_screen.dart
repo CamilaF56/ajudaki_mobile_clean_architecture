@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../view_models/work_listing_view_model.dart';
 import 'work_listing_entry.dart';
-import 'work_listing_filters.dart';
+import 'work_listing_category_filter.dart';
 import 'work_listing_top_bar.dart';
 
 /// Tela principal responsável por exibir a listagem de serviços.
@@ -43,7 +43,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
             thickness: 2,
             color: Color.fromRGBO(171, 186, 255, 1),
           ),
-          WorkListingFilters(
+          WorkListingCategoryFilter(
             categories: vm.categories,
             selectedCategory: vm.selectedCategory,
             onCategoryChanged: vm.filterByCategory,
