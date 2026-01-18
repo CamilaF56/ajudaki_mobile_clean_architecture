@@ -1,16 +1,13 @@
 import '../../../../utils/web/web_result.dart';
-import '../api_client_config.dart';
 import '../api_client_operations.dart';
 
 abstract class ApiClientPath<T> {
   ApiClientPath(
-    this.apiClientConfig,
+    this.operations,
     this.resource,
-    this.fromJson)
-    : operations = ApiClientOperations<T>(apiClientConfig);
+    this.fromJson);
 
-  final ApiClientConfig apiClientConfig;
-  final ApiClientOperations<T> operations;
+  final ApiClientOperations operations;
   final String resource;
   final T Function(Map<String, dynamic> json) fromJson;
 
