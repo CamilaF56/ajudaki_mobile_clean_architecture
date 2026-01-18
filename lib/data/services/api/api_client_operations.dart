@@ -3,6 +3,8 @@ import '../../../utils/web/web_result.dart';
 import 'api_client_config.dart';
 
 class ApiClientOperations {
+  ApiClientOperations._();
+
   static Future<WebResult<T>> get<T>(
     final ApiClientConfig config,
     final String path,

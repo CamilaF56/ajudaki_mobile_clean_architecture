@@ -6,7 +6,7 @@ import '../work_listing_repository.dart';
 /// Repositório responsável por obter os anúncios de trabalho.
 class WorkListingRemoteRepository implements WorkListingRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
-  WorkListingRemoteRepository(apiClientConfig)
+  WorkListingRemoteRepository(final apiClientConfig)
   : _apiPath = ApiClientWorkListingsPath(apiClientConfig);
 
   final ApiClientWorkListingsPath _apiPath;
@@ -32,6 +32,7 @@ class WorkListingRemoteRepository implements WorkListingRepository {
   /// Retorna os anúncios filtrados por categoria.
   ///
   /// Caso exista cache, o filtro é aplicado localmente.
+  @override
   Future<Result<List<WorkListing>>> getByCategory(
     final int categoryId) async {
       if (_cache != null) {
@@ -44,7 +45,8 @@ class WorkListingRemoteRepository implements WorkListingRepository {
       return Result(true, filtered);
     }
 
-    final webResponse = await _apiPath.search(workCategoryId: categoryId.toString());
+    final webResponse = await _apiPath.search(
+      workCategoryId: categoryId.toString());
 
     return Result<List<WorkListing>>(
       webResponse.isSuccess,
@@ -55,8 +57,10 @@ class WorkListingRemoteRepository implements WorkListingRepository {
   /// Retorna os anúncios filtrados pelo termo de busca.
   ///
   /// A busca é realizada via API.
+  @override
   Future<Result<List<WorkListing>>> getByTerm(final String terms) async {
-    final result = await _apiPath.search(terms: terms);
+    final result = await _apiPath.search(
+      terms: terms);
 
     List<WorkListing>? list;
     if (result.isSuccess) {

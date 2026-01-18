@@ -1,7 +1,7 @@
 class Repositories {
   final Map<Type, dynamic> _repositories = {};
 
-  void add<T>(T repository) {
+  void add<T>(final T repository) {
     _repositories[T] = repository;
   }
 

@@ -10,7 +10,7 @@ import 'web_result_status_type.dart';
 class WebResult<T> extends Result<T> {
   WebResult.withJson(
     final int numCode, [
-    String? body,
+    final String? body,
     final T Function(Map<String, dynamic> json)? jsonConverter
   ]) : super(
         WebResultStatus(numCode).type == WebResultStatusType.success,

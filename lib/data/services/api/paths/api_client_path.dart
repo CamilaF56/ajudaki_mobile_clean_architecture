@@ -1,5 +1,5 @@
-import 'package:ajudaki_mobile_clean_architecture/data/services/api/api_client_config.dart';
 import '../../../../utils/web/web_result.dart';
+import '../api_client_config.dart';
 import '../api_client_operations.dart';
 
 abstract class ApiClientPath<T> {

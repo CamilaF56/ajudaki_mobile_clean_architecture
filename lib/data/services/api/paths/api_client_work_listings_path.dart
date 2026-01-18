@@ -1,6 +1,6 @@
-import 'package:ajudaki_mobile_clean_architecture/data/services/api/api_client_operations.dart';
 import '../../../../domain/work_listing.dart';
 import '../../../../utils/web/web_result.dart';
+import '../api_client_operations.dart';
 import 'api_client_path.dart';
 
 class ApiClientWorkListingsPath extends ApiClientPath<WorkListing> {
@@ -14,8 +14,8 @@ class ApiClientWorkListingsPath extends ApiClientPath<WorkListing> {
   static const String terms = 'terms';
 
   Future<WebResult<Map<String, WorkListing>>> search({
-    String? workCategoryId,
-    String? terms}) async {
+    final String? workCategoryId,
+    final String? terms}) async {
     final queryParameters = <String, String?>{};
     queryParameters['workCategoryId'] = workCategoryId;
     queryParameters['terms'] = terms;

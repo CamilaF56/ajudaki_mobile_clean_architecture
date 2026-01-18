@@ -12,7 +12,7 @@ class WorkListingCategoryFilter extends StatelessWidget {
     this.categories,
     this.selectedCategory,
     this.onCategoryChanged,
-    [Key? key]
+    [final Key? key]
   ) : super(key: key);
 
   /// Lista de áreas de atuação disponíveis para seleção.

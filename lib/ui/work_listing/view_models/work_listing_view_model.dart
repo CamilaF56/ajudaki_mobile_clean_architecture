@@ -9,71 +9,35 @@ import '../../../domain/work_listing.dart';
 /// Atua como intermediário entre a camada de UI e os repositórios.
 class WorkListingViewModel extends ChangeNotifier {
   /// Cria o ViewModel com os repositórios necessários.
-  WorkListingViewModel(this._workListingRepository,
+  WorkListingViewModel(
+    this._workListingRepository,
     this._workCategoryRepository);
-
-  /// Repositório de anúncios de trabalho.
+    
   final WorkListingRepository _workListingRepository;
-
-  /// Repositório de áreas de atuação.
   final WorkCategoryRepository _workCategoryRepository;
 
   // ---------- STATE ----------
 
-  /// Lista atual de anúncios de trabalho.
   List<WorkListing> _listings = [];
-
-  /// Lista de áreas de atuação disponíveis.
   List<WorkCategory> _categories = [];
-
-  /// Área de atuação atualmente selecionada para filtro.
   WorkCategory? _selectedCategory;
-
-  /// Indica se a UI está no modo de busca.
   bool _isSearching = false;
-
-  /// Termo atual de busca.
   String _searchTerm = '';
-
-  /// Indica se uma operação está em andamento.
   bool _isLoading = false;
-
-  /// Indica se o ViewModel já foi inicializado.
   bool _isInitialized = false;
-
-  /// Indica erro ao carregar anúncios.
   bool _hasListingError = false;
-
-  /// Indica erro ao carregar áreas de atuação.
   bool _hasCategoryError = false;
 
   // ---------- GETTERS ----------
 
-  /// Lista de anúncios de trabalho.
   List<WorkListing> get listings => _listings;
-
-  /// Lista de áreas de atuação disponíveis.
   List<WorkCategory> get categories => _categories;
-
-  /// Área de atuação selecionada atualmente.
   WorkCategory? get selectedCategory => _selectedCategory;
-
-  /// Indica se o modo de busca está ativo.
   bool get isSearching => _isSearching;
-
-  /// Termo de busca atual.
   String get searchTerm => _searchTerm.trim();
-
-  /// Indica se há carregamento em progresso.
   bool get isLoading => _isLoading;
-
-  /// Indica se ocorreu algum erro.
   bool get hasError => _hasListingError || _hasCategoryError;
-
-  /// Indica erro na listagem de trabalhos.
   bool get hasListingError => _hasListingError;
-
-  /// Indica erro no carregamento de áreas de atuação.
   bool get hasCategoryError => _hasCategoryError;
 
   // ---------- LIFECYCLE ----------

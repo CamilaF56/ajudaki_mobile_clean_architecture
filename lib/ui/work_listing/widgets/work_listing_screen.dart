@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../view_models/work_listing_view_model.dart';
-import 'work_listing_entry.dart';
 import 'work_listing_category_filter.dart';
+import 'work_listing_entry.dart';
 import 'work_listing_top_bar.dart';
 
 /// Tela principal responsável por exibir a listagem de serviços.
@@ -13,7 +13,7 @@ import 'work_listing_top_bar.dart';
 class WorkListingScreen extends StatefulWidget {
   /// Cria a tela de listagem de serviços.
   const WorkListingScreen(
-    [Key? key]
+    [final Key? key]
     ) : super(key: key);
 
   @override

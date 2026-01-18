@@ -10,7 +10,7 @@ class WorkListingEntry extends StatelessWidget {
   /// Cria o widget de exibição de um anúncio de trabalho.
   const WorkListingEntry(
     this.listing,
-    [Key? key]
+    [final Key? key]
   ) : super(key: key);
 
   /// Anúncio de trabalho a ser exibido.

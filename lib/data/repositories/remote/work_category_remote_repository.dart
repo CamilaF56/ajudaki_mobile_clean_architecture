@@ -6,7 +6,7 @@ import '../work_category_repository.dart';
 /// Repositório responsável por obter as categorias de trabalho.
 class WorkCategoryRemoteRepository implements WorkCategoryRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
-  WorkCategoryRemoteRepository(apiClientConfig)
+  WorkCategoryRemoteRepository(final apiClientConfig)
   : _apiPath = ApiClientWorkCategoriesPath(apiClientConfig);
 
   final ApiClientWorkCategoriesPath _apiPath;
