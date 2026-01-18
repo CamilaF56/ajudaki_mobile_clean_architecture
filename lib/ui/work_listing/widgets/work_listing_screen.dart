@@ -16,7 +16,6 @@ class WorkListingScreen extends StatefulWidget {
     [final Key? key]
     ) : super(key: key);
 
-
   @override
   State<WorkListingScreen> createState() => _WorkListingScreenState();
 }
@@ -39,7 +38,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
       backgroundColor: const Color.fromRGBO(235, 236, 237, 1),
       body: Column(
         children: [
-          WorkListingTopBar(),
+          const WorkListingTopBar(),
           const Divider(
             height: 1,
             thickness: 2,

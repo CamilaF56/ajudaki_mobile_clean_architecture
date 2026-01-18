@@ -26,7 +26,7 @@ class WorkListingViewModel extends ChangeNotifier {
   bool isInitialized = false;
 
   bool isLoading = false;
-  String? error = null;
+  String? error;
   List<WorkListing> listings = [];
   List<WorkCategory> categories = [];
   String? searchTerm;
@@ -123,7 +123,8 @@ class WorkListingViewModel extends ChangeNotifier {
 
     notifyListeners();
 
-    final response = await _workListingRepository.getByCategory(filterCategory!.id);
+    final response =
+    await _workListingRepository.getByCategory(filterCategory!.id);
 
     if (response.isSuccess) {
       listings = response.value!;

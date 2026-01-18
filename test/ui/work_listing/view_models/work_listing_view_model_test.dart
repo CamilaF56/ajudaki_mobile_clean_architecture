@@ -114,9 +114,9 @@ void main() {
       final viewModel = WorkListingViewModel(
         listingRepo,
         FakeWorkCategoryRepository(),
-      );
+      )
 
-      viewModel.searchTerm = 'pintar';
+      ..searchTerm = 'pintar';
       await viewModel.searchCommand.execute();
 
       expect(viewModel.listings.length, 1);
@@ -130,9 +130,9 @@ void main() {
       final viewModel = WorkListingViewModel(
         listingRepo,
         FakeWorkCategoryRepository(),
-      );
+      )
 
-      viewModel.searchTerm = '';
+      ..searchTerm = '';
       await viewModel.searchCommand.execute();
 
       expect(viewModel.error, false);
@@ -145,9 +145,9 @@ void main() {
       final viewModel = WorkListingViewModel(
         listingRepo,
         FakeWorkCategoryRepository(),
-      );
+      )
 
-      viewModel.searchTerm = 'erro';
+      ..searchTerm = 'erro';
       await viewModel.searchCommand.execute();
 
       expect(viewModel.error, true);
@@ -172,9 +172,9 @@ void main() {
       final viewModel = WorkListingViewModel(
         listingRepo,
         FakeWorkCategoryRepository(),
-      );
+      )
 
-      viewModel.filterCategory = category;
+      ..filterCategory = category;
       await viewModel.filterByCategoryCommand.execute();
 
       expect(viewModel.listings.length, 1);
@@ -190,9 +190,9 @@ void main() {
       final viewModel = WorkListingViewModel(
         listingRepo,
         FakeWorkCategoryRepository(),
-      );
+      )
 
-      viewModel.filterCategory = category;
+      ..filterCategory = category;
       await viewModel.filterByCategoryCommand.execute();
 
       expect(viewModel.error, true);
@@ -243,9 +243,9 @@ void main() {
     final viewModel = WorkListingViewModel(
       listingRepo,
       FakeWorkCategoryRepository(),
-    );
+    )
 
-      viewModel.filterCategory = WorkCategory(1, 'Hidráulica');
+      ..filterCategory = WorkCategory(1, 'Hidráulica');
       await viewModel.filterByCategoryCommand.execute();
 
     await viewModel.reloadCommand.execute();

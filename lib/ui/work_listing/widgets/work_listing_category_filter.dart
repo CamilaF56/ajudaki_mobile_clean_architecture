@@ -37,12 +37,12 @@ class WorkListingCategoryFilter extends StatelessWidget {
                     ),
                   )
                   .toList(),
-                  onChanged: (category) {
+                  onChanged: (final category) async {
                     if (vm.filterCategory == category) {
-                      vm.reloadCommand.execute();
+                      await vm.reloadCommand.execute();
                     } else {
                       vm.filterCategory = category;
-                      vm.filterByCategoryCommand.execute();
+                      await vm.filterByCategoryCommand.execute();
                     }
                   },
                   decoration: const InputDecoration(
@@ -62,7 +62,6 @@ class WorkListingCategoryFilter extends StatelessWidget {
   @override
   void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty<List<WorkCategory>>('options', options));
+    properties.add(DiagnosticsProperty<List<WorkCategory>>('options', options));
   }
 }

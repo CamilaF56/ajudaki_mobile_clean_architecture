@@ -25,7 +25,7 @@ class Command extends ChangeNotifier {
       running = false;
       completed = true;
       notifyListeners();
-      _onEnded?.call();
+      await _onEnded?.call();
     }
   }
 

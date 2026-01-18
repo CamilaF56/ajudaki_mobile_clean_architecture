@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../view_models/work_listing_view_controller.dart';
@@ -8,19 +9,16 @@ import '../view_models/work_listing_view_controller.dart';
 /// além de fornecer ações de navegação para retorno à tela inicial
 /// e ativação/desativação do modo de pesquisa.
 class WorkListingTopBar extends StatefulWidget  {
-    @override
-  _WorkListingTopBarState createState() => _WorkListingTopBarState();
-
   /// Cria a barra superior da listagem de serviços.
-  ///
-  /// Os callbacks [onMenuTap] e [onSearchTap] são opcionais e permitem
-  /// customização, caso necessário.
-  WorkListingTopBar(
+  const WorkListingTopBar(
     [final Key? key]
   ) : super(key: key);
+
+  @override
+  WorkListingTopBarState createState() => WorkListingTopBarState();
 }
 
-class _WorkListingTopBarState extends State<WorkListingTopBar> {
+class WorkListingTopBarState extends State<WorkListingTopBar> {
   bool isShowingTextBox = false;
 
   @override
@@ -55,7 +53,7 @@ class _WorkListingTopBarState extends State<WorkListingTopBar> {
                 if (vm.searchTerm != null) {
                   vm.searchTerm = '';
                   isShowingTextBox = false;
-                  vm.reloadCommand.execute();
+                  await vm.reloadCommand.execute();
                 }
 
                 await vm.reloadCommand.execute();
@@ -73,8 +71,8 @@ class _WorkListingTopBarState extends State<WorkListingTopBar> {
                   hintText: 'Buscar serviço...',
                   isDense: true,
                 ),
-                onChanged: (value) => vm.searchTerm = value,
-                onSubmitted: (value) => vm.searchCommand.execute()
+                onChanged: (final value) => vm.searchTerm = value,
+                onSubmitted: (final value) => vm.searchCommand.execute()
               ),
             )
           else
@@ -109,14 +107,12 @@ class _WorkListingTopBarState extends State<WorkListingTopBar> {
               constraints: const BoxConstraints(),
               onPressed: () async {
                 FocusManager.instance.primaryFocus?.unfocus();
-                setState(() {
+                setState(() async {
                   if (isShowingTextBox) {
-                    // Clear the search term and hide the text box when closing
                     vm.searchTerm = '';
-                    vm.reloadCommand.execute();
+                    await vm.reloadCommand.execute();
                     isShowingTextBox = false;
                   } else {
-                    // Show the text box when opening
                     vm.searchTerm = '';
                     isShowingTextBox = true;
                   }
@@ -127,5 +123,12 @@ class _WorkListingTopBarState extends State<WorkListingTopBar> {
         ],
       ),
     );
+  }
+  
+  @override
+  void debugFillProperties(final DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<bool>(
+      'isShowingTextBox', isShowingTextBox));
   }
 }
