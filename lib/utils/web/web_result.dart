@@ -12,12 +12,10 @@ class WebResult<T> extends Result<T> {
     final int numCode, [
     this.body,
     final T Function(Map<String, dynamic> json)? jsonConverter
-  ]) : status = WebResultStatus(numCode),
-      super(
+  ]) : super(
         WebResultStatus(numCode).type != WebResultStatusType.success,
         fromJson(body, jsonConverter)
       );
 
-  final WebResultStatus status;
   final String? body;
 }
