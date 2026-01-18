@@ -5,28 +5,19 @@ class WebResultStatusCode {
 
   final int code;
 
-  bool get isInformational => code >= 200 && code < 300;
-  bool get isSuccess => code >= 200 && code < 300;
-  bool get isRedirection => code >= 300 && code < 400;
-  bool get isClientError => code >= 400 && code < 500;
-  bool get isServerError => code >= 500 && code < 600;
-
   WebResultStatusType getStatusType(final int code) {
-    if (isInformational) {
+    if (code >= 100 && code < 200) {
       return WebResultStatusType.informational;
-    }
-    if (isSuccess) {
+    } else if (code >= 200 && code < 300) {
       return WebResultStatusType.success;
-    }
-    if (isRedirection) {
+    } else if (code >= 300 && code < 400) {
       return WebResultStatusType.redirection;
-    }
-    if (isClientError) {
+    } else if (code >= 400 && code < 500) {
       return WebResultStatusType.clientError;
-    }
-    if (isServerError) {
+    } else if (code >= 500 && code < 600) {
       return WebResultStatusType.serverError;
+    } else {
+      return WebResultStatusType.unknown;
     }
-    return WebResultStatusType.unknown;
   }
 }
