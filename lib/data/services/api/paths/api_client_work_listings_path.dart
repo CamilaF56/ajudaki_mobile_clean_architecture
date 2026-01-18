@@ -22,7 +22,7 @@ class ApiClientWorkListingsPath extends ApiClientPath<WorkListing> {
 
     return ApiClientOperations.get<Map<String, WorkListing>>(
       apiClientConfig,
-      resource,
+      '$resource/search',
       (final json) {
         final map = json;
         return map.map(
