@@ -13,7 +13,7 @@ class WebResult<T> extends Result<T> {
     this.body,
     final T Function(Map<String, dynamic> json)? jsonConverter
   ]) : super(
-        WebResultStatus(numCode).type != WebResultStatusType.success,
+        WebResultStatus(numCode).type == WebResultStatusType.success,
         fromJson(body, jsonConverter)
       );
 
