@@ -61,7 +61,7 @@ class _WorkListingScreenState extends State<WorkListingScreen> {
     }
 
     if (vm.error != null) {
-      return Center(child: Text('Erro'));
+      return const Center(child: Text('Erro'));
     }
 
     if (vm.listings.isEmpty) {
