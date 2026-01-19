@@ -1,3 +1,4 @@
+import 'package:ajudaki_mobile_clean_architecture/data/repositories/repositories.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_type.dart';
@@ -22,11 +23,9 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
+      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        categoryRepo,
-      );
+      final viewModel = WorkListingViewModel(apiClient);
 
       await viewModel.init();
 
@@ -41,11 +40,9 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
+      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        categoryRepo,
-      );
+      final viewModel = WorkListingViewModel(apiClient);
 
       await viewModel.init();
 
@@ -67,11 +64,9 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(false);
+      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        categoryRepo,
-      );
+      final viewModel = WorkListingViewModel(apiClient);
 
       await viewModel.init();
 
@@ -86,11 +81,9 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, []);
+      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        categoryRepo,
-      );
+      final viewModel = WorkListingViewModel(apiClient);
 
       await viewModel.init();
 
@@ -112,12 +105,10 @@ void main() {
           )
         ]);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        FakeWorkCategoryRepository(),
-      )
-
+      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
+      final viewModel = WorkListingViewModel(apiClient)
       ..searchTerm = 'pintar';
+
       await viewModel.searchCommand.execute();
 
       expect(viewModel.listings.length, 1);
@@ -127,13 +118,11 @@ void main() {
     test('busca vazia restaura dados', () async {
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
+      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        FakeWorkCategoryRepository(),
-      )
-
+      final viewModel = WorkListingViewModel(apiClient)
       ..searchTerm = '';
+
       await viewModel.searchCommand.execute();
 
       expect(viewModel.error, null);
@@ -142,13 +131,11 @@ void main() {
     test('busca seta erro quando falha', () async {
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
+      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        FakeWorkCategoryRepository(),
-      )
-
+      final viewModel = WorkListingViewModel(apiClient)
       ..searchTerm = 'erro';
+
       await viewModel.searchCommand.execute();
 
       expect(viewModel.error, isNotNull);
@@ -169,13 +156,11 @@ void main() {
             120,
           )
         ]);
+      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        FakeWorkCategoryRepository(),
-      )
-
+      final viewModel = WorkListingViewModel(apiClient)
       ..filterCategory = category;
+
       await viewModel.filterByCategoryCommand.execute();
 
       expect(viewModel.listings.length, 1);
@@ -187,13 +172,11 @@ void main() {
 
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
+      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        FakeWorkCategoryRepository(),
-      )
-
+      final viewModel = WorkListingViewModel(apiClient)
       ..filterCategory = category;
+
       await viewModel.filterByCategoryCommand.execute();
 
       expect(viewModel.error, isNotNull);
@@ -206,10 +189,9 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
 
-      final viewModel = WorkListingViewModel(
-        listingRepo,
-        FakeWorkCategoryRepository(),
-      );
+      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
+
+      final viewModel = WorkListingViewModel(apiClient);
 
       await viewModel.reloadCommand.execute();
     });
@@ -229,12 +211,10 @@ void main() {
           )]
         );
 
-    final viewModel = WorkListingViewModel(
-      listingRepo,
-      FakeWorkCategoryRepository(),
-    )
-
+    final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
+    final viewModel = WorkListingViewModel(apiClient)
     ..filterCategory = WorkCategory(1, 'Hidráulica');
+
     await viewModel.filterByCategoryCommand.execute();
 
     await viewModel.reloadCommand.execute();

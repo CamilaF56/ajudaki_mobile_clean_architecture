@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
-import '../../data/repositories/work_category_repository.dart';
-import '../../data/repositories/work_listing_repository.dart';
+import '../../data/repositories/repositories.dart';
 import '../../domain/work_category.dart';
 import '../../domain/work_listing.dart';
 import '../../utils/command.dart';
@@ -11,24 +10,15 @@ import '../../utils/command.dart';
 class WorkListingViewModel extends ChangeNotifier {
   /// Cria o ViewModel com os repositórios necessários.
   WorkListingViewModel(
-    this._workListingRepository,
-    this._workCategoryRepository) {
-      loadCategoriesCommand = Command(_loadCategories);
-      loadListingsCommand = Command( _loadListings);
-      reloadCommand = Command( _reload);
-      searchCommand = Command( _search);
-      filterByCategoryCommand = Command( _filterByCategory);
-    }
-    
-  final WorkListingRepository _workListingRepository;
-  final WorkCategoryRepository _workCategoryRepository;
+    this.repositories);
 
-  late final Command loadCategoriesCommand;
-  late final Command loadListingsCommand;
+  final Repositories repositories;
 
-  late final Command reloadCommand;
-  late final Command searchCommand;
-  late final Command filterByCategoryCommand;
+  late final loadCategoriesCommand = Command(_loadCategories);
+  late final loadListingsCommand = Command( _loadListings);
+  late final reloadCommand = Command( _reload);
+  late final searchCommand = Command( _search);
+  late final filterByCategoryCommand = Command( _filterByCategory);
 
   bool isInitialized = false;
 
@@ -53,7 +43,7 @@ class WorkListingViewModel extends ChangeNotifier {
   Future<void> _loadListings() async {
     notifyListeners();
 
-    final result = await _workListingRepository.getAll();
+    final result = await repositories.workListings.getAll();
 
     if (result.isSuccess) {
       listings = result.value!;
@@ -68,7 +58,7 @@ class WorkListingViewModel extends ChangeNotifier {
   Future<void> _loadCategories() async {
     notifyListeners();
 
-    final result = await _workCategoryRepository.getAll();
+    final result = await repositories.workCategories.getAll();
 
     if (result.isSuccess) {
       categories = result.value!;
@@ -86,7 +76,7 @@ class WorkListingViewModel extends ChangeNotifier {
     filterCategory = null;
     notifyListeners();
 
-    final response = await _workListingRepository.getAll();
+    final response = await repositories.workListings.getAll();
 
     if (response.isSuccess) {
       listings = response.value!;
@@ -108,7 +98,7 @@ class WorkListingViewModel extends ChangeNotifier {
 
     notifyListeners();
 
-    final response = await _workListingRepository.getByTerm(trimmed);
+    final response = await repositories.workListings.getByTerm(trimmed);
 
     if (response.isSuccess) {
       listings = response.value!;
@@ -129,7 +119,7 @@ class WorkListingViewModel extends ChangeNotifier {
     notifyListeners();
 
     final response =
-    await _workListingRepository.getByCategory(filterCategory!.id);
+    await repositories.workListings.getByCategory(filterCategory!.id);
 
     if (response.isSuccess) {
       listings = response.value!;

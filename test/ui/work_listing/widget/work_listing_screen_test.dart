@@ -1,3 +1,4 @@
+import 'package:ajudaki_mobile_clean_architecture/data/repositories/repositories.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_entry.dart';
@@ -34,10 +35,8 @@ void main() {
     final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
-    final vm = WorkListingViewModel(
-      listingRepo,
-      categoryRepo,
-    );
+    final repositories = Repositories(categoryRepo, listingRepo);
+    final vm = WorkListingViewModel(repositories);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pumpAndSettle();
@@ -53,10 +52,8 @@ void main() {
     final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, []);
 
-    final vm = WorkListingViewModel(
-      listingRepo,
-      categoryRepo,
-    );
+    final repositories = Repositories(categoryRepo, listingRepo);
+    final vm = WorkListingViewModel(repositories);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pump();
@@ -74,10 +71,8 @@ void main() {
     final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, []);
 
-    final vm = WorkListingViewModel(
-      listingRepo,
-      categoryRepo,
-    );
+    final repositories = Repositories(categoryRepo, listingRepo);
+    final vm = WorkListingViewModel(repositories);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pump();

@@ -1,15 +1,14 @@
 import '../../../domain/work_listing.dart';
 import '../../../utils/result.dart';
-import '../../services/api/paths/api_client_work_listings_path.dart';
+import '../../services/api/api_client.dart';
 import '../work_listing_repository.dart';
 
 /// Repositório responsável por obter os anúncios de trabalho.
 class WorkListingRemoteRepository implements WorkListingRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
-  WorkListingRemoteRepository(final apiClientConfig)
-  : _apiPath = ApiClientWorkListingsPath(apiClientConfig);
+  WorkListingRemoteRepository(this._apiClient);
 
-  final ApiClientWorkListingsPath _apiPath;
+  ApiClient _apiClient;
   List<WorkListing>? _cache;
 
   /// Retorna todos os anúncios de trabalho.
@@ -19,7 +18,7 @@ class WorkListingRemoteRepository implements WorkListingRepository {
   @override
   Future<Result<List<WorkListing>>> getAll() async {
     if (_cache == null) {
-      final webResponse = await _apiPath.getAll();
+      final webResponse = await _apiClient.workListings.getAll();
 
       if (webResponse.isSuccess) {
         _cache = webResponse.value?.values.toList();
@@ -45,7 +44,7 @@ class WorkListingRemoteRepository implements WorkListingRepository {
       return Result(true, filtered);
     }
 
-    final webResponse = await _apiPath.search(
+    final webResponse = await _apiClient.workListings.search(
       workCategoryId: categoryId.toString());
 
     return Result<List<WorkListing>>(
@@ -59,7 +58,7 @@ class WorkListingRemoteRepository implements WorkListingRepository {
   /// A busca é realizada via API.
   @override
   Future<Result<List<WorkListing>>> getByTerm(final String terms) async {
-    final result = await _apiPath.search(
+    final result = await _apiClient.workListings.search(
       terms: terms);
 
     List<WorkListing>? list;

@@ -1,15 +1,11 @@
+import 'work_category_repository.dart';
+import 'work_listing_repository.dart';
+
 class Repositories {
-  final Map<Type, dynamic> _repositories = {};
+  Repositories(
+    this.workCategories,
+    this.workListings);
 
-  void add<T>(final T repository) {
-    _repositories[T] = repository;
-  }
-
-  T get<T>() {
-    final repository = _repositories[T];
-    if (repository == null) {
-      throw Exception('Repositorio do tipo $T não encontrado');
-    }
-    return repository;
-  }
+  late WorkCategoryRepository workCategories;
+  late WorkListingRepository workListings;
 }

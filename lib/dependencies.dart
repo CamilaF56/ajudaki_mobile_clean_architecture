@@ -3,8 +3,7 @@ import 'package:provider/single_child_widget.dart';
 import 'data/repositories/remote/work_category_remote_repository.dart';
 import 'data/repositories/remote/work_listing_remote_repository.dart';
 import 'data/repositories/repositories.dart';
-import 'data/repositories/work_category_repository.dart';
-import 'data/repositories/work_listing_repository.dart';
+import 'data/services/api/api_client.dart';
 import 'data/services/api/api_client_config.dart';
 import 'ui/work_listing/work_listing_view_controller.dart';
 
@@ -19,23 +18,18 @@ List<SingleChildWidget> get providersRemote {
     'api'
   );
 
-  final repositories = Repositories()
-  ..add<WorkCategoryRepository>(
-    WorkCategoryRemoteRepository(apiClientConfig))
-  ..add<WorkListingRepository>(
-    WorkListingRemoteRepository(apiClientConfig));
+  final apiClient = ApiClient(apiClientConfig);
+
+  final remoteRepositories = Repositories(
+    WorkCategoryRemoteRepository(apiClient),
+    WorkListingRemoteRepository(apiClient));
 
   return [
     Provider.value(value: apiClientConfig),
-
-    Provider.value(value: repositories),
+    Provider.value(value: remoteRepositories),
 
     ChangeNotifierProvider(
-      create: (final context)
-      => WorkListingViewModel(
-        repositories.get<WorkListingRepository>(),
-        repositories.get<WorkCategoryRepository>()
-      )
+      create: (final context) => WorkListingViewModel(remoteRepositories)
     ),
   ];
 }

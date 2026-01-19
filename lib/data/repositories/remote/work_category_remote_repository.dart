@@ -1,15 +1,14 @@
 import '../../../domain/work_category.dart';
 import '../../../utils/result.dart';
-import '../../services/api/paths/api_client_work_categories_path.dart';
+import '../../services/api/api_client.dart';
 import '../work_category_repository.dart';
 
 /// Repositório responsável por obter as categorias de trabalho.
 class WorkCategoryRemoteRepository implements WorkCategoryRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
-  WorkCategoryRemoteRepository(final apiClientConfig)
-  : _apiPath = ApiClientWorkCategoriesPath(apiClientConfig);
+  WorkCategoryRemoteRepository(this._apiClient);
 
-  final ApiClientWorkCategoriesPath _apiPath;
+  ApiClient _apiClient;
   List<WorkCategory>? _cache;
 
   /// Retorna todas as categorias de trabalho.
@@ -19,7 +18,7 @@ class WorkCategoryRemoteRepository implements WorkCategoryRepository {
   @override
   Future<Result<List<WorkCategory>>> getAll() async {
     if (_cache == null) {
-      final webResponse = await _apiPath.getAll();
+      final webResponse = await _apiClient.workCategories.getAll();
 
       if (webResponse.isSuccess) {
         _cache = webResponse.value?.values.toList();
