@@ -8,7 +8,7 @@ import 'ui/work_listing/widgets/work_listing_screen.dart';
 /// Inicializa a injeção de dependências e
 /// registra o widget raiz da aplicação.
 void main() {
-  runApp(MultiProvider(providers: providersRemote, child: const MyApp()));
+  runApp(MultiProvider(providers: providers, child: const MyApp()));
 }
 
 /// Widget raiz da aplicação.
