@@ -1,32 +1,43 @@
-import 'person.dart';
+import 'model.dart';
 
 /// Representa um profissional no sistema.
 ///
-/// Especializa a entidade [Person].
-class Professional extends Person {
+/// Especializa a entidade [Professional].
+class Professional extends Model {
   /// Cria uma instância de [Professional].
   Professional(
     super.id,
-    super.name,
-    super.cpf,
-    super.phoneNumber,
-    super.cep,
-    super.pictureUrl,
+    this.name,
+    this.cpf,
+    this.phoneNumber,
+    this.cep,
+    this.pictureUrl,
   );
 
   /// Cria uma instância de [Professional] a partir de um JSON.
-  ///
-  /// Reutiliza o mapeamento definido em [Person].
   factory Professional.fromJson(final Map<String, dynamic> json) {
-    final person = Person.fromJson(json);
-
     return Professional(
-      person.id,
-      person.name,
-      person.cpf,
-      person.phoneNumber,
-      person.cep,
-      person.pictureUrl,
+      json['Id'],
+      json['Name'],
+      json['Cpf'],
+      json['PhoneNumber'],
+      json['Cep'],
+      json['PictureUrl'],
     );
   }
+
+  /// Nome da pessoa.
+  final String name;
+
+  /// CPF da pessoa.
+  final String cpf;
+
+  /// Número de telefone para contato.
+  final String phoneNumber;
+
+  /// CEP do endereço da pessoa.
+  final String cep;
+
+  /// URL da imagem de perfil da pessoa.
+  final String pictureUrl;
 }
