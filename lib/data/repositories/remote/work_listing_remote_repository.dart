@@ -8,7 +8,7 @@ class WorkListingRemoteRepository implements WorkListingRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
   WorkListingRemoteRepository(this._apiClient);
 
-  ApiClient _apiClient;
+  final ApiClient _apiClient;
   List<WorkListing>? _cache;
 
   /// Retorna todos os anúncios de trabalho.

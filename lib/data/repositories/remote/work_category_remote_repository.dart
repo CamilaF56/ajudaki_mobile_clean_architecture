@@ -8,7 +8,7 @@ class WorkCategoryRemoteRepository implements WorkCategoryRepository {
   /// Cria o repositório com o cliente de API utilizado nas requisições.
   WorkCategoryRemoteRepository(this._apiClient);
 
-  ApiClient _apiClient;
+  final ApiClient _apiClient;
   List<WorkCategory>? _cache;
 
   /// Retorna todas as categorias de trabalho.
