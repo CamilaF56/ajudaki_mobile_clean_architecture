@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../controllers/work_listing_view_controller.dart';
+import '../../../controllers/work_listing/work_listing_view_controller.dart';
 import 'work_listing_category_filter.dart';
 import 'work_listing_entry.dart';
 import 'work_listing_top_bar.dart';

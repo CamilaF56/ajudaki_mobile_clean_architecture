@@ -5,7 +5,7 @@ import 'entities/repositories/remote/work_listing_remote_repository.dart';
 import 'entities/repositories/repositories.dart';
 import 'entities/services/api_client.dart';
 import 'entities/services/api_client_config.dart';
-import 'controllers/work_listing_view_controller.dart';
+import 'controllers/work_listing/work_listing_view_controller.dart';
 import 'use_cases/work_category/list_work_categories_usecase.dart';
 import 'use_cases/work_listing/list_work_listings_usecase.dart';
 import 'use_cases/work_listing/search_work_listings_by_terms_usecase.dart';
