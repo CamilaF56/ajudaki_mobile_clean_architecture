@@ -1,5 +1,5 @@
-import '../models/work_category.dart';
 import '../../../utils/result.dart';
+import '../models/work_category.dart';
 import 'repository.dart';
 
 /// Repositório responsável por obter as categorias de trabalho.

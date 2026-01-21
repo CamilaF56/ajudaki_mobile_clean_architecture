@@ -9,7 +9,8 @@ class SearchWorkListingsByTermsUsecase {
 
   Future<Result<List<WorkListing>>> execute(final String terms) async {
     try {
-      final workListings = await _workListingsRepository.getByTerms(terms);
+      final workListings =
+      await _workListingsRepository.getByTerms(terms);
       return workListings;
     } on Exception catch (_) {
       return Result(false);

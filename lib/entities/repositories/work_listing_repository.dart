@@ -1,5 +1,5 @@
-import '../models/work_listing.dart';
 import '../../../utils/result.dart';
+import '../models/work_listing.dart';
 import 'repository.dart';
 
 /// Repositório responsável por obter os anúncios de trabalho.

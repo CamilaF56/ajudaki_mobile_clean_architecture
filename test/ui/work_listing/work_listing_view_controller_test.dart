@@ -1,7 +1,7 @@
+import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_type.dart';
-import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/use_cases/work_category/list_work_categories_usecase.dart';
 import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/list_work_listings_usecase.dart';
 import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/search_work_listings_by_category_usecase.dart';
@@ -27,16 +27,18 @@ void main() {
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
       await vm.init();
 
@@ -52,16 +54,18 @@ void main() {
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
       await vm.init();
 
@@ -84,16 +88,18 @@ void main() {
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(false);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
       await vm.init();
 
@@ -109,16 +115,18 @@ void main() {
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, []);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
       await vm.init();
 
@@ -141,16 +149,18 @@ void main() {
           )
         ]);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
       await vm.init();
       vm.searchTerm = 'pintar';
@@ -165,16 +175,18 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
       await vm.init();
       vm.searchTerm = '';
@@ -188,17 +200,20 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
+      await vm.init();
       vm.searchTerm = 'erro';
       await vm.searchCommand.execute();
 
@@ -222,16 +237,18 @@ void main() {
           )
         ]);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase)
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm)
       ..filterCategory = category;
 
       await vm.init();
@@ -247,16 +264,18 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase)
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm)
       ..filterCategory = category;
 
       await vm.filterByCategoryCommand.execute();
@@ -272,16 +291,18 @@ void main() {
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
       await vm.init();
       await vm.reloadCommand.execute();
@@ -303,16 +324,18 @@ void main() {
           )]
         );
 
-      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
-      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
-      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
-      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      final listCategories = ListWorkCategoriesUsecase(categoryRepo);
+      final listListings = ListWorkListingsUsecase(listingRepo);
+      final searchListingsByCategory =
+      SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchListingsByTerm =
+      SearchWorkListingsByTermsUsecase(listingRepo);
       
       final vm = WorkListingViewController(
-        listWorkCategoriesUsecase,
-        listWorkListingsUsecase,
-        searchWorkListingsByCategoryUsecase,
-        searchWorkListingsByTermUsecase);
+        listCategories,
+        listListings,
+        searchListingsByCategory,
+        searchListingsByTerm);
 
     await vm.init();
 

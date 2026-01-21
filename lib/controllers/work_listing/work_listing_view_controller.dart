@@ -13,15 +13,15 @@ import '../../utils/command.dart';
 class WorkListingViewController extends ChangeNotifier {
   /// Cria o ViewModel com os repositórios necessários.
   WorkListingViewController(
-    this._listWorkCategoriesUsecase,
-    this._listWorkListingsUsecase,
-    this._searchWorkListingsByCategoryUsecase,
-    this._searchWorkListingsByTermsUsecase);
+    this._listCategoriesUsecase,
+    this._listListingsUsecase,
+    this._searchListingsByCategoryUsecase,
+    this._searchListingsByTermsUsecase);
 
-  final ListWorkCategoriesUsecase _listWorkCategoriesUsecase;
-  final ListWorkListingsUsecase _listWorkListingsUsecase;
-  final SearchWorkListingsByCategoryUsecase _searchWorkListingsByCategoryUsecase;
-  final SearchWorkListingsByTermsUsecase _searchWorkListingsByTermsUsecase;
+  final ListWorkCategoriesUsecase _listCategoriesUsecase;
+  final ListWorkListingsUsecase _listListingsUsecase;
+  final SearchWorkListingsByCategoryUsecase _searchListingsByCategoryUsecase;
+  final SearchWorkListingsByTermsUsecase _searchListingsByTermsUsecase;
 
   late final loadCategoriesCommand = Command(_loadCategories);
   late final loadListingsCommand = Command( _loadListings);
@@ -52,7 +52,7 @@ class WorkListingViewController extends ChangeNotifier {
   Future<void> _loadListings() async {
     notifyListeners();
 
-    final result = await _listWorkListingsUsecase.execute();
+    final result = await _listListingsUsecase.execute();
 
     if (result.isSuccess) {
       listings = result.value!;
@@ -67,7 +67,7 @@ class WorkListingViewController extends ChangeNotifier {
   Future<void> _loadCategories() async {
     notifyListeners();
 
-    final result = await _listWorkCategoriesUsecase.execute();
+    final result = await _listCategoriesUsecase.execute();
 
     if (result.isSuccess) {
       categories = result.value!;
@@ -85,7 +85,7 @@ class WorkListingViewController extends ChangeNotifier {
     filterCategory = null;
     notifyListeners();
 
-    final response = await _listWorkListingsUsecase.execute();
+    final response = await _listListingsUsecase.execute();
 
     if (response.isSuccess) {
       listings = response.value!;
@@ -107,7 +107,7 @@ class WorkListingViewController extends ChangeNotifier {
 
     notifyListeners();
 
-    final response = await _searchWorkListingsByTermsUsecase.execute(trimmed);
+    final response = await _searchListingsByTermsUsecase.execute(trimmed);
 
     if (response.isSuccess) {
       listings = response.value!;
@@ -128,7 +128,7 @@ class WorkListingViewController extends ChangeNotifier {
     notifyListeners();
 
     final response =
-    await _searchWorkListingsByCategoryUsecase.execute(filterCategory!.id);
+    await _searchListingsByCategoryUsecase.execute(filterCategory!.id);
 
     if (response.isSuccess) {
       listings = response.value!;
