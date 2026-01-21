@@ -1,4 +1,4 @@
-import '../../../../utils/web/web_result.dart';
+import '../../../utils/web/web_result.dart';
 import '../api_client_config.dart';
 import '../api_client_operations.dart';
 

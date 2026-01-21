@@ -1,9 +1,9 @@
-import 'package:ajudaki_mobile_clean_architecture/data/repositories/repositories.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/repositories/repositories.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_category.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_entry.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_screen.dart';
-import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/work_listing_view_controller.dart';
+import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -12,7 +12,7 @@ import '../../../../testing/fakes/repositories/fake_work_category_repository.dar
 import '../../../../testing/fakes/repositories/fake_work_listing_repository.dart';
 
 void main() {
-  Widget makeTestableWidget(final WorkListingViewModel vm) {
+  Widget makeTestableWidget(final WorkListingViewController vm) {
     return MaterialApp(
       home: ChangeNotifierProvider.value(
         value: vm,
@@ -36,7 +36,7 @@ void main() {
       ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
     final repositories = Repositories(categoryRepo, listingRepo);
-    final vm = WorkListingViewModel(repositories);
+    final vm = WorkListingViewController(repositories);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pumpAndSettle();
@@ -53,7 +53,7 @@ void main() {
       ..response = Result(true, []);
 
     final repositories = Repositories(categoryRepo, listingRepo);
-    final vm = WorkListingViewModel(repositories);
+    final vm = WorkListingViewController(repositories);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pump();
@@ -72,7 +72,7 @@ void main() {
       ..response = Result(true, []);
 
     final repositories = Repositories(categoryRepo, listingRepo);
-    final vm = WorkListingViewModel(repositories);
+    final vm = WorkListingViewController(repositories);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pump();

@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import '../../../utils/web/web_result.dart';
+import '../../utils/web/web_result.dart';
 import 'api_client_config.dart';
 
 class ApiClientOperations {

@@ -1,6 +1,6 @@
-import 'package:ajudaki_mobile_clean_architecture/data/services/api/api_client_config.dart';
-import 'package:ajudaki_mobile_clean_architecture/data/services/api/paths/api_client_work_listings_path.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/services/api_client_config.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/services/paths/api_client_work_listings_path.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/web/web_result.dart';
 
 class FakeApiClientWorkListingsPath implements ApiClientWorkListingsPath {

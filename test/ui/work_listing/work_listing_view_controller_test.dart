@@ -1,8 +1,8 @@
-import 'package:ajudaki_mobile_clean_architecture/data/repositories/repositories.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_type.dart';
-import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/work_listing_view_controller.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/repositories/repositories.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_category.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_listing.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_type.dart';
+import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing_view_controller.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../../testing/fakes/repositories/fake_work_category_repository.dart';
@@ -25,7 +25,7 @@ void main() {
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
       final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient);
+      final viewModel = WorkListingViewController(apiClient);
 
       await viewModel.init();
 
@@ -42,7 +42,7 @@ void main() {
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
       final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient);
+      final viewModel = WorkListingViewController(apiClient);
 
       await viewModel.init();
 
@@ -66,7 +66,7 @@ void main() {
         ..response = Result(false);
       final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient);
+      final viewModel = WorkListingViewController(apiClient);
 
       await viewModel.init();
 
@@ -83,7 +83,7 @@ void main() {
         ..response = Result(true, []);
       final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient);
+      final viewModel = WorkListingViewController(apiClient);
 
       await viewModel.init();
 
@@ -106,7 +106,7 @@ void main() {
         ]);
 
       final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
-      final viewModel = WorkListingViewModel(apiClient)
+      final viewModel = WorkListingViewController(apiClient)
       ..searchTerm = 'pintar';
 
       await viewModel.searchCommand.execute();
@@ -120,7 +120,7 @@ void main() {
         ..response = Result(true, []);
       final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient)
+      final viewModel = WorkListingViewController(apiClient)
       ..searchTerm = '';
 
       await viewModel.searchCommand.execute();
@@ -133,7 +133,7 @@ void main() {
         ..response = Result(false);
       final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient)
+      final viewModel = WorkListingViewController(apiClient)
       ..searchTerm = 'erro';
 
       await viewModel.searchCommand.execute();
@@ -158,7 +158,7 @@ void main() {
         ]);
       final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient)
+      final viewModel = WorkListingViewController(apiClient)
       ..filterCategory = category;
 
       await viewModel.filterByCategoryCommand.execute();
@@ -174,7 +174,7 @@ void main() {
         ..response = Result(false);
       final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient)
+      final viewModel = WorkListingViewController(apiClient)
       ..filterCategory = category;
 
       await viewModel.filterByCategoryCommand.execute();
@@ -191,7 +191,7 @@ void main() {
 
       final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewModel(apiClient);
+      final viewModel = WorkListingViewController(apiClient);
 
       await viewModel.reloadCommand.execute();
     });
@@ -212,7 +212,7 @@ void main() {
         );
 
     final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
-    final viewModel = WorkListingViewModel(apiClient)
+    final viewModel = WorkListingViewController(apiClient)
     ..filterCategory = WorkCategory(1, 'Hidráulica');
 
     await viewModel.filterByCategoryCommand.execute();

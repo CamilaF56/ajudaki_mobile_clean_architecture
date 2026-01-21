@@ -1,6 +1,6 @@
-import '../../../domain/work_listing.dart';
+import '../../models/work_listing.dart';
 import '../../../utils/result.dart';
-import '../../services/api/api_client.dart';
+import '../../services/api_client.dart';
 import '../work_listing_repository.dart';
 
 /// Repositório responsável por obter os anúncios de trabalho.
@@ -57,7 +57,7 @@ class WorkListingRemoteRepository implements WorkListingRepository {
   ///
   /// A busca é realizada via API.
   @override
-  Future<Result<List<WorkListing>>> getByTerm(final String terms) async {
+  Future<Result<List<WorkListing>>> getByTerms(final String terms) async {
     final result = await _apiClient.workListings.search(
       terms: terms);
 

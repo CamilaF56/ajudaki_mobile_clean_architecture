@@ -1,18 +1,24 @@
 import 'package:flutter/foundation.dart';
-import '../../data/repositories/repositories.dart';
-import '../../domain/work_category.dart';
-import '../../domain/work_listing.dart';
-import '../../utils/command.dart';
+import '../entities/repositories/repositories.dart';
+import '../entities/models/work_category.dart';
+import '../entities/models/work_listing.dart';
+import '../utils/command.dart';
 
 /// ViewModel responsável por gerenciar o estado da listagem de trabalhos.
 ///
 /// Atua como intermediário entre a camada de UI e os repositórios.
-class WorkListingViewModel extends ChangeNotifier {
+class WorkListingViewController extends ChangeNotifier {
   /// Cria o ViewModel com os repositórios necessários.
-  WorkListingViewModel(
-    this.repositories);
+  WorkListingViewController(
+    this._listWorkCategoriesUsecase,
+    this._listWorkListingsUsecase,
+    this._searchWorkListingsByCategoryUsecase,
+    this._searchWorkListingsByTermsUsecase);
 
-  final Repositories repositories;
+  final _listWorkCategoriesUsecase;
+  final _listWorkListingsUsecase;
+  final _searchWorkListingsByCategoryUsecase;
+  final _searchWorkListingsByTermsUsecase;
 
   late final loadCategoriesCommand = Command(_loadCategories);
   late final loadListingsCommand = Command( _loadListings);
@@ -43,7 +49,7 @@ class WorkListingViewModel extends ChangeNotifier {
   Future<void> _loadListings() async {
     notifyListeners();
 
-    final result = await repositories.workListings.getAll();
+    final result = await _listWorkListingsUsecase.execute();
 
     if (result.isSuccess) {
       listings = result.value!;
@@ -58,7 +64,7 @@ class WorkListingViewModel extends ChangeNotifier {
   Future<void> _loadCategories() async {
     notifyListeners();
 
-    final result = await repositories.workCategories.getAll();
+    final result = await _listWorkCategoriesUsecase.execute();
 
     if (result.isSuccess) {
       categories = result.value!;
@@ -76,13 +82,7 @@ class WorkListingViewModel extends ChangeNotifier {
     filterCategory = null;
     notifyListeners();
 
-    final response = await repositories.workListings.getAll();
-
-    if (response.isSuccess) {
-      listings = response.value!;
-    } else {
-      listings = [];
-    }
+    _loadListings();
 
     isLoading = false;
     notifyListeners();
@@ -98,7 +98,7 @@ class WorkListingViewModel extends ChangeNotifier {
 
     notifyListeners();
 
-    final response = await repositories.workListings.getByTerm(trimmed);
+    final response = await _searchWorkListingsByTermsUsecase.execute(trimmed);
 
     if (response.isSuccess) {
       listings = response.value!;
@@ -119,7 +119,7 @@ class WorkListingViewModel extends ChangeNotifier {
     notifyListeners();
 
     final response =
-    await repositories.workListings.getByCategory(filterCategory!.id);
+    await _searchWorkListingsByCategoryUsecase.execute(filterCategory!.id);
 
     if (response.isSuccess) {
       listings = response.value!;

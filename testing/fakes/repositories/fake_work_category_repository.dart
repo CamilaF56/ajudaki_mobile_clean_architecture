@@ -1,5 +1,5 @@
-import 'package:ajudaki_mobile_clean_architecture/data/repositories/work_category_repository.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_category.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/repositories/work_category_repository.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 
 class FakeWorkCategoryRepository implements WorkCategoryRepository {

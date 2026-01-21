@@ -1,5 +1,5 @@
-import 'package:ajudaki_mobile_clean_architecture/data/repositories/work_listing_repository.dart';
-import 'package:ajudaki_mobile_clean_architecture/domain/work_listing.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/repositories/work_listing_repository.dart';
+import 'package:ajudaki_mobile_clean_architecture/entities/models/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 
 class FakeWorkListingRepository implements WorkListingRepository {
@@ -18,7 +18,7 @@ class FakeWorkListingRepository implements WorkListingRepository {
   }
 
   @override
-  Future<Result<List<WorkListing>>> getByTerm(String term) async {
+  Future<Result<List<WorkListing>>> getByTerms(String term) async {
     return response ?? Result(true, []);
   }
 }

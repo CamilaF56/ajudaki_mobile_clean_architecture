@@ -1,5 +1,5 @@
-import '../../../../domain/work_listing.dart';
-import '../../../../utils/web/web_result.dart';
+import '../../models/work_listing.dart';
+import '../../../utils/web/web_result.dart';
 import '../api_client_operations.dart';
 import 'api_client_path.dart';
 

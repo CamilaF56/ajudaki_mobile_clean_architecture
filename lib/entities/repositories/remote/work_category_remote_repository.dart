@@ -1,6 +1,6 @@
-import '../../../domain/work_category.dart';
+import '../../models/work_category.dart';
 import '../../../utils/result.dart';
-import '../../services/api/api_client.dart';
+import '../../services/api_client.dart';
 import '../work_category_repository.dart';
 
 /// Repositório responsável por obter as categorias de trabalho.

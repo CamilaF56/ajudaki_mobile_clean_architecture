@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../work_listing_view_controller.dart';
+import '../../../controllers/work_listing_view_controller.dart';
 
 /// Barra superior da tela de listagem de serviços.
 ///
@@ -23,7 +23,7 @@ class WorkListingTopBarState extends State<WorkListingTopBar> {
 
   @override
   Widget build(final BuildContext context) {
-    final vm = context.watch<WorkListingViewModel>();
+    final vm = context.watch<WorkListingViewController>();
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
     return Container(

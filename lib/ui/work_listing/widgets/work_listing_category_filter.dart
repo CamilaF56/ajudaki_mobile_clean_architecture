@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../domain/work_category.dart';
-import '../work_listing_view_controller.dart';
+import '../../../entities/models/work_category.dart';
+import '../../../controllers/work_listing_view_controller.dart';
 
 /// Widget responsável por exibir os filtros de área de atuação.
 ///
@@ -19,7 +19,7 @@ class WorkListingCategoryFilter extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final vm = context.watch<WorkListingViewModel>();
+    final vm = context.watch<WorkListingViewController>();
 
     return Padding(
       padding: const EdgeInsets.all(16),
