@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
-import '../entities/repositories/repositories.dart';
-import '../entities/models/work_category.dart';
-import '../entities/models/work_listing.dart';
-import '../utils/command.dart';
+import '../../entities/models/work_category.dart';
+import '../../entities/models/work_listing.dart';
+import '../../utils/command.dart';
 
 /// ViewModel responsável por gerenciar o estado da listagem de trabalhos.
 ///
@@ -82,7 +81,13 @@ class WorkListingViewController extends ChangeNotifier {
     filterCategory = null;
     notifyListeners();
 
-    _loadListings();
+    final response = await _listWorkListingsUsecase.execute();
+
+    if (response.isSuccess) {
+      listings = response.value!;
+    } else {
+      listings = [];
+    }
 
     isLoading = false;
     notifyListeners();
