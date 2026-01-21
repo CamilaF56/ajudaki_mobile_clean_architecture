@@ -1,9 +1,12 @@
-import 'package:ajudaki_mobile_clean_architecture/entities/repositories/repositories.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_entry.dart';
 import 'package:ajudaki_mobile_clean_architecture/ui/work_listing/widgets/work_listing_screen.dart';
-import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing_view_controller.dart';
+import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing/work_listing_view_controller.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_category/list_work_categories_usecase.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/list_work_listings_usecase.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/search_work_listings_by_category_usecase.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/search_work_listings_by_terms_usecase.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,8 +38,16 @@ void main() {
     final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
 
-    final repositories = Repositories(categoryRepo, listingRepo);
-    final vm = WorkListingViewController(repositories);
+    final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+    final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+    final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+    final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+    
+    final vm = WorkListingViewController(
+      listWorkCategoriesUsecase,
+      listWorkListingsUsecase,
+      searchWorkListingsByCategoryUsecase,
+      searchWorkListingsByTermUsecase);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pumpAndSettle();
@@ -52,8 +63,16 @@ void main() {
     final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, []);
 
-    final repositories = Repositories(categoryRepo, listingRepo);
-    final vm = WorkListingViewController(repositories);
+    final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+    final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+    final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+    final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+    
+    final vm = WorkListingViewController(
+      listWorkCategoriesUsecase,
+      listWorkListingsUsecase,
+      searchWorkListingsByCategoryUsecase,
+      searchWorkListingsByTermUsecase);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pump();
@@ -71,8 +90,16 @@ void main() {
     final categoryRepo = FakeWorkCategoryRepository()
       ..response = Result(true, []);
 
-    final repositories = Repositories(categoryRepo, listingRepo);
-    final vm = WorkListingViewController(repositories);
+    final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+    final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+    final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+    final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+    
+    final vm = WorkListingViewController(
+      listWorkCategoriesUsecase,
+      listWorkListingsUsecase,
+      searchWorkListingsByCategoryUsecase,
+      searchWorkListingsByTermUsecase);
 
     await tester.pumpWidget(makeTestableWidget(vm));
     await tester.pump();

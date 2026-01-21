@@ -1,8 +1,11 @@
-import 'package:ajudaki_mobile_clean_architecture/entities/repositories/repositories.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_category.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_listing.dart';
 import 'package:ajudaki_mobile_clean_architecture/entities/models/work_type.dart';
-import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing_view_controller.dart';
+import 'package:ajudaki_mobile_clean_architecture/controllers/work_listing/work_listing_view_controller.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_category/list_work_categories_usecase.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/list_work_listings_usecase.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/search_work_listings_by_category_usecase.dart';
+import 'package:ajudaki_mobile_clean_architecture/use_cases/work_listing/search_work_listings_by_terms_usecase.dart';
 import 'package:ajudaki_mobile_clean_architecture/utils/result.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../../testing/fakes/repositories/fake_work_category_repository.dart';
@@ -23,15 +26,23 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
-      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient);
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      await viewModel.init();
+      await vm.init();
 
-      expect(viewModel.listings.length, 1);
-      expect(viewModel.categories.length, 1);
-      expect(viewModel.error, null);
+      expect(vm.listings.length, 1);
+      expect(vm.categories.length, 1);
+      expect(vm.error, null);
     });
 
     test('seta erro quando serviços falham', () async {
@@ -40,15 +51,23 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, [WorkCategory(1, 'Elétrica')]);
-      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient);
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      await viewModel.init();
+      await vm.init();
 
-      expect(viewModel.error, isNotNull);
-      expect(viewModel.listings.isEmpty, true);
-      expect(viewModel.categories.length, 1);
+      expect(vm.listings.isEmpty, true);
+      expect(vm.categories.length, 1);
+      expect(vm.error, isNotNull);
     });
 
     test('seta erro quando categorias falham', () async {
@@ -64,15 +83,23 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(false);
-      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient);
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      await viewModel.init();
+      await vm.init();
 
-      expect(viewModel.error, isNotNull);
-      expect(viewModel.categories.isEmpty, true);
-      expect(viewModel.listings.length, 1);
+      expect(vm.error, isNotNull);
+      expect(vm.categories.isEmpty, true);
+      expect(vm.listings.length, 1);
     });
 
     test('aceita listas vazias sem erro', () async {
@@ -81,20 +108,29 @@ void main() {
 
       final categoryRepo = FakeWorkCategoryRepository()
         ..response = Result(true, []);
-      final apiClient = Repositories(categoryRepo, listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient);
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      await viewModel.init();
+      await vm.init();
 
-      expect(viewModel.error, null);
-      expect(viewModel.listings.isEmpty, true);
-      expect(viewModel.categories.isEmpty, true);
+      expect(vm.error, null);
+      expect(vm.listings.isEmpty, true);
+      expect(vm.categories.isEmpty, true);
     });
   });
 
   group('search', () {
     test('busca serviços com termo', () async {
+      final categoryRepo = FakeWorkCategoryRepository();
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, [
           WorkListing(
@@ -105,48 +141,77 @@ void main() {
           )
         ]);
 
-      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
-      final viewModel = WorkListingViewController(apiClient)
-      ..searchTerm = 'pintar';
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      await viewModel.searchCommand.execute();
+      await vm.init();
+      vm.searchTerm = 'pintar';
+      await vm.searchCommand.execute();
 
-      expect(viewModel.listings.length, 1);
-      expect(viewModel.error, null);
+      expect(vm.listings.length, 1);
+      expect(vm.error, null);
     });
 
     test('busca vazia restaura dados', () async {
+      final categoryRepo = FakeWorkCategoryRepository();
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
-      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient)
-      ..searchTerm = '';
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      await viewModel.searchCommand.execute();
+      await vm.init();
+      vm.searchTerm = '';
+      await vm.searchCommand.execute();
 
-      expect(viewModel.error, null);
+      expect(vm.error, null);
     });
 
     test('busca seta erro quando falha', () async {
+      final categoryRepo = FakeWorkCategoryRepository();
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
-      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient)
-      ..searchTerm = 'erro';
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      await viewModel.searchCommand.execute();
+      vm.searchTerm = 'erro';
+      await vm.searchCommand.execute();
 
-      expect(viewModel.error, isNotNull);
-      expect(viewModel.listings.isEmpty, true);
+      expect(vm.error, isNotNull);
+      expect(vm.listings.isEmpty, true);
     });
   });
 
   group('filterByCategory', () {
     test('filtra serviços por categoria', () async {
-      final category = WorkCategory(1, 'Elétrica');
-
+      final category = WorkCategory(1, '');
+      final categoryRepo = FakeWorkCategoryRepository()
+      ..response = Result(true, [category]);
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, [
           WorkListing(
@@ -156,48 +221,75 @@ void main() {
             120,
           )
         ]);
-      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient)
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase)
       ..filterCategory = category;
 
-      await viewModel.filterByCategoryCommand.execute();
+      await vm.init();
+      await vm.filterByCategoryCommand.execute();
 
-      expect(viewModel.listings.length, 1);
-      expect(viewModel.error, null);
+      expect(vm.listings.length, 1);
+      expect(vm.error, null);
     });
 
     test('filtro seta erro quando falha', () async {
       final category = WorkCategory(1, 'Elétrica');
-
+      final categoryRepo = FakeWorkCategoryRepository();
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(false);
-      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
 
-      final viewModel = WorkListingViewController(apiClient)
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase)
       ..filterCategory = category;
 
-      await viewModel.filterByCategoryCommand.execute();
+      await vm.filterByCategoryCommand.execute();
 
-      expect(viewModel.error, isNotNull);
-      expect(viewModel.listings.isEmpty, true);
+      expect(vm.error, isNotNull);
+      expect(vm.listings.isEmpty, true);
     });
   });
 
   group('reset & toggleSearch', () {
     test('reset limpa categoria selecionada', () async {
+      final categoryRepo = FakeWorkCategoryRepository();
       final listingRepo = FakeWorkListingRepository()
         ..response = Result(true, []);
 
-      final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-      final viewModel = WorkListingViewController(apiClient);
-
-      await viewModel.reloadCommand.execute();
+      await vm.init();
+      await vm.reloadCommand.execute();
     });
   });
 
   test('loadBackHome limpa categoria e recarrega listagem do cache', () async {
+    final categoryRepo = FakeWorkCategoryRepository();
     final listingRepo = FakeWorkListingRepository()
       ..response = Result(
         true,
@@ -211,15 +303,24 @@ void main() {
           )]
         );
 
-    final apiClient = Repositories(FakeWorkCategoryRepository(), listingRepo);
-    final viewModel = WorkListingViewController(apiClient)
-    ..filterCategory = WorkCategory(1, 'Hidráulica');
+      final listWorkCategoriesUsecase = ListWorkCategoriesUsecase(categoryRepo);
+      final listWorkListingsUsecase = ListWorkListingsUsecase(listingRepo);
+      final searchWorkListingsByCategoryUsecase = SearchWorkListingsByCategoryUsecase(listingRepo);
+      final searchWorkListingsByTermUsecase = SearchWorkListingsByTermsUsecase(listingRepo);
+      
+      final vm = WorkListingViewController(
+        listWorkCategoriesUsecase,
+        listWorkListingsUsecase,
+        searchWorkListingsByCategoryUsecase,
+        searchWorkListingsByTermUsecase);
 
-    await viewModel.filterByCategoryCommand.execute();
+    await vm.init();
 
-    await viewModel.reloadCommand.execute();
+    vm.filterCategory = WorkCategory(1, 'Hidráulica');
+    await vm.filterByCategoryCommand.execute();
+    await vm.reloadCommand.execute();
 
-    expect(viewModel.listings.length, 1);
-    expect(viewModel.error, null);
+    expect(vm.listings.length, 1);
+    expect(vm.error, null);
   });
 }

@@ -1,6 +1,10 @@
 import 'package:flutter/foundation.dart';
 import '../../entities/models/work_category.dart';
 import '../../entities/models/work_listing.dart';
+import '../../use_cases/work_category/list_work_categories_usecase.dart';
+import '../../use_cases/work_listing/list_work_listings_usecase.dart';
+import '../../use_cases/work_listing/search_work_listings_by_category_usecase.dart';
+import '../../use_cases/work_listing/search_work_listings_by_terms_usecase.dart';
 import '../../utils/command.dart';
 
 /// ViewModel responsável por gerenciar o estado da listagem de trabalhos.
@@ -14,10 +18,10 @@ class WorkListingViewController extends ChangeNotifier {
     this._searchWorkListingsByCategoryUsecase,
     this._searchWorkListingsByTermsUsecase);
 
-  final _listWorkCategoriesUsecase;
-  final _listWorkListingsUsecase;
-  final _searchWorkListingsByCategoryUsecase;
-  final _searchWorkListingsByTermsUsecase;
+  final ListWorkCategoriesUsecase _listWorkCategoriesUsecase;
+  final ListWorkListingsUsecase _listWorkListingsUsecase;
+  final SearchWorkListingsByCategoryUsecase _searchWorkListingsByCategoryUsecase;
+  final SearchWorkListingsByTermsUsecase _searchWorkListingsByTermsUsecase;
 
   late final loadCategoriesCommand = Command(_loadCategories);
   late final loadListingsCommand = Command( _loadListings);

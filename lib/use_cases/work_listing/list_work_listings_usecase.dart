@@ -10,8 +10,8 @@ class ListWorkListingsUsecase {
   Future<Result<List<WorkListing>>> execute() async {
     try {
       final workListings = await _workListingsRepository.getAll();
-      return Result(true, workListings.value);
-    } on Exception catch (e) {
+      return workListings;
+    } on Exception catch (_) {
       return Result(false);
     }
   }
