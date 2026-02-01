@@ -1,0 +1,1 @@
+# ajudaki_mobile_clean_architecture
